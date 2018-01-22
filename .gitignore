@@ -1,0 +1,5 @@
+# am.js ignores... 
+demo
+node_modules 
+*log 
+*cache 
