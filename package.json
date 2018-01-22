@@ -53,12 +53,6 @@
       ]
     ]
   },
-  "husky": {
-    "hooks": {
-      "post-merge":
-        "./node_modules/.bin/prettier --tab-width 2 --use-tabs {./*{js,json},src/**/*,dist/*} --write"
-    }
-  },
   "lint-staged": {
     "*.{js,json,ts}": [
       "./node_modules/.bin/prettier --tab-width 2 --trailing-comma none --write",
