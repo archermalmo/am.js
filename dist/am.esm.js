@@ -478,14 +478,6 @@ var select = function(t) {
   },
   selectById = function(t) {
     return document.getElementById(t);
-  },
-  slugify = function(t) {
-    var e =
-      arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "-";
-    return t
-      .replace(/(\!|#|\$|%|\*|\.|\/|\\|\(|\)|\+|\||\,|\:|\'|\")/g, "")
-      .replace(/(.)(\s|\_|\-)+(.)/g, "$1" + e + "$3")
-      .toLowerCase();
   };
 function _toArray(t) {
   return Array.isArray(t) ? t : Array.from(t);
@@ -506,6 +498,14 @@ var trim = function(t) {
         return ucFirst(t);
       })
       .join(" ");
+  },
+  slugify = function(t) {
+    var e =
+      arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "-";
+    return t
+      .replace(/(\!|#|\$|%|\*|\.|\/|\\|\(|\)|\+|\||\,|\:|\'|\")/g, "")
+      .replace(/(.)(\s|\_|\-)+(.)/g, "$1" + e + "$3")
+      .toLowerCase();
   };
 export {
   Request,
