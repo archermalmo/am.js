@@ -19,6 +19,13 @@ function scrollTo(element: Element, to: number, duration: number): void {
   }, 10);
 }
 
+/**
+ * @name isElementInViewport
+ * @description Determines if a given element is partially or
+ * fully visible in the viewport.
+ * @param {object} config Config object
+ * @return {boolean}
+ */
 function isElementInViewport({
   element,
   elementDivisorSize,

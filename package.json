@@ -9,6 +9,8 @@
   "module": "dist/am.esm.js",
   "devDependencies": {
     "@types/es6-promise": "^3.3.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.2.0",
     "babel-plugin-macros": "^2.0.0",
     "babel-preset-env": "^1.6.1",
     "httpster": "^1.0.3",
@@ -35,7 +37,8 @@
     "precommit": "lint-staged",
     "rollup": "yarn r",
     "start": "yarn rollup --watch",
-    "test": "jest",
+    "test": "jest -u",
+    "test:watch": "yarn test --watch",
     "p":
       "./node_modules/.bin/prettier --tab-width 2 --trailing-comma none {./*{js,json},src/**/*,dist/*} --write"
   },
@@ -52,6 +55,13 @@
         }
       ]
     ]
+  },
+  "jest": {
+    "moduleDirectories": ["node_modules", "src", "dist"],
+    "testPathIgnorePatterns": ["node_modules", "__tests__/__*"],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
   },
   "lint-staged": {
     "*.{js,json,ts}": [
