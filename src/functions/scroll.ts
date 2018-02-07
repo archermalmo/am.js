@@ -19,4 +19,37 @@ function scrollTo(element: Element, to: number, duration: number): void {
   }, 10);
 }
 
-export { scrollTo };
+function isElementInViewport({
+  element,
+  elementDivisorSize,
+  useBottomOffset
+}: {
+  element: Element;
+  elementDivisorSize: number;
+  useBottomOffset: boolean;
+}): boolean {
+  const defaultParams: {
+    elementDivisorSize: number;
+    useBottomOffset: boolean;
+  } = { elementDivisorSize: 1, useBottomOffset: false };
+
+  const safeArgs = {
+    ...defaultParams,
+    ...{
+      element,
+      elementDivisorSize: Math.ceil(Math.abs(elementDivisorSize)),
+      useBottomOffset
+    }
+  };
+
+  const { top, bottom, height } = element.getBoundingClientRect();
+
+  const triggerTop =
+    (window.innerHeight || document.documentElement.clientHeight) -
+    height / elementDivisorSize;
+  const triggerBottom = useBottomOffset ? height / elementDivisorSize : 0;
+
+  return bottom >= triggerBottom && top <= triggerTop;
+}
+
+export { isElementInViewport, scrollTo };
