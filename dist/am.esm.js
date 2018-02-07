@@ -40,28 +40,28 @@ function _classCallCheck(t, e) {
           function(t) {
             return t && r.indexOf(Object.prototype.toString.call(t)) > -1;
           };
-    (c.prototype.append = function(t, e) {
+    (l.prototype.append = function(t, e) {
       (t = a(t)), (e = u(e));
       var r = this.map[t];
       this.map[t] = r ? r + "," + e : e;
     }),
-      (c.prototype.delete = function(t) {
+      (l.prototype.delete = function(t) {
         delete this.map[a(t)];
       }),
-      (c.prototype.get = function(t) {
+      (l.prototype.get = function(t) {
         return (t = a(t)), this.has(t) ? this.map[t] : null;
       }),
-      (c.prototype.has = function(t) {
+      (l.prototype.has = function(t) {
         return this.map.hasOwnProperty(a(t));
       }),
-      (c.prototype.set = function(t, e) {
+      (l.prototype.set = function(t, e) {
         this.map[a(t)] = u(e);
       }),
-      (c.prototype.forEach = function(t, e) {
+      (l.prototype.forEach = function(t, e) {
         for (var r in this.map)
           this.map.hasOwnProperty(r) && t.call(e, this.map[r], r, this);
       }),
-      (c.prototype.keys = function() {
+      (l.prototype.keys = function() {
         var t = [];
         return (
           this.forEach(function(e, r) {
@@ -70,7 +70,7 @@ function _classCallCheck(t, e) {
           f(t)
         );
       }),
-      (c.prototype.values = function() {
+      (l.prototype.values = function() {
         var t = [];
         return (
           this.forEach(function(e) {
@@ -79,7 +79,7 @@ function _classCallCheck(t, e) {
           f(t)
         );
       }),
-      (c.prototype.entries = function() {
+      (l.prototype.entries = function() {
         var t = [];
         return (
           this.forEach(function(e, r) {
@@ -88,7 +88,7 @@ function _classCallCheck(t, e) {
           f(t)
         );
       }),
-      e.iterable && (c.prototype[Symbol.iterator] = c.prototype.entries);
+      e.iterable && (l.prototype[Symbol.iterator] = l.prototype.entries);
     var i = ["DELETE", "GET", "HEAD", "OPTIONS", "POST", "PUT"];
     (b.prototype.clone = function() {
       return new b(this, { body: this._bodyInit });
@@ -99,7 +99,7 @@ function _classCallCheck(t, e) {
         return new w(this._bodyInit, {
           status: this.status,
           statusText: this.statusText,
-          headers: new c(this.headers),
+          headers: new l(this.headers),
           url: this.url
         });
       }),
@@ -112,7 +112,7 @@ function _classCallCheck(t, e) {
       if (-1 === s.indexOf(e)) throw new RangeError("Invalid status code");
       return new w(null, { status: e, headers: { location: t } });
     }),
-      (t.Headers = c),
+      (t.Headers = l),
       (t.Request = b),
       (t.Response = w),
       (t.fetch = function(t, r) {
@@ -126,7 +126,7 @@ function _classCallCheck(t, e) {
                 status: s.status,
                 statusText: s.statusText,
                 headers: ((t = s.getAllResponseHeaders() || ""),
-                (e = new c()),
+                (e = new l()),
                 t.split(/\r?\n/).forEach(function(t) {
                   var r = t.split(":"),
                     o = r.shift().trim();
@@ -187,9 +187,9 @@ function _classCallCheck(t, e) {
       r
     );
   }
-  function c(t) {
+  function l(t) {
     (this.map = {}),
-      t instanceof c
+      t instanceof l
         ? t.forEach(function(t, e) {
             this.append(e, t);
           }, this)
@@ -202,11 +202,11 @@ function _classCallCheck(t, e) {
               this.append(e, t[e]);
             }, this);
   }
-  function h(t) {
+  function c(t) {
     if (t.bodyUsed) return Promise.reject(new TypeError("Already read"));
     t.bodyUsed = !0;
   }
-  function l(t) {
+  function h(t) {
     return new Promise(function(e, r) {
       (t.onload = function() {
         e(t.result);
@@ -218,7 +218,7 @@ function _classCallCheck(t, e) {
   }
   function d(t) {
     var e = new FileReader(),
-      r = l(e);
+      r = h(e);
     return e.readAsArrayBuffer(t), r;
   }
   function p(t) {
@@ -264,7 +264,7 @@ function _classCallCheck(t, e) {
       }),
       e.blob &&
         ((this.blob = function() {
-          var t = h(this);
+          var t = c(this);
           if (t) return t;
           if (this._bodyBlob) return Promise.resolve(this._bodyBlob);
           if (this._bodyArrayBuffer)
@@ -275,20 +275,20 @@ function _classCallCheck(t, e) {
         }),
         (this.arrayBuffer = function() {
           return this._bodyArrayBuffer
-            ? h(this) || Promise.resolve(this._bodyArrayBuffer)
+            ? c(this) || Promise.resolve(this._bodyArrayBuffer)
             : this.blob().then(d);
         })),
       (this.text = function() {
         var t,
           e,
           r,
-          o = h(this);
+          o = c(this);
         if (o) return o;
         if (this._bodyBlob)
           return (
             (t = this._bodyBlob),
             (e = new FileReader()),
-            (r = l(e)),
+            (r = h(e)),
             e.readAsText(t),
             r
           );
@@ -326,14 +326,14 @@ function _classCallCheck(t, e) {
       if (t.bodyUsed) throw new TypeError("Already read");
       (this.url = t.url),
         (this.credentials = t.credentials),
-        e.headers || (this.headers = new c(t.headers)),
+        e.headers || (this.headers = new l(t.headers)),
         (this.method = t.method),
         (this.mode = t.mode),
         n || null == t._bodyInit || ((n = t._bodyInit), (t.bodyUsed = !0));
     } else this.url = String(t);
     if (
       ((this.credentials = e.credentials || this.credentials || "omit"),
-      (!e.headers && this.headers) || (this.headers = new c(e.headers)),
+      (!e.headers && this.headers) || (this.headers = new l(e.headers)),
       (this.method = ((r = e.method || this.method || "GET"),
       (o = r.toUpperCase()),
       i.indexOf(o) > -1 ? o : r)),
@@ -367,7 +367,7 @@ function _classCallCheck(t, e) {
       (this.status = "status" in e ? e.status : 200),
       (this.ok = this.status >= 200 && this.status < 300),
       (this.statusText = "statusText" in e ? e.statusText : "OK"),
-      (this.headers = new c(e.headers)),
+      (this.headers = new l(e.headers)),
       (this.url = e.url || ""),
       this._initBody(t);
   }
@@ -468,6 +468,26 @@ function scrollTo(t, e, r) {
     }, 10);
   }
 }
+function isElementInViewport(t) {
+  var e = t.element,
+    r = t.elementDivisorSize,
+    o = t.useBottomOffset,
+    n = (Object.assign(
+      {},
+      { elementDivisorSize: 1, useBottomOffset: !1 },
+      {
+        element: e,
+        elementDivisorSize: Math.ceil(Math.abs(r)),
+        useBottomOffset: o
+      }
+    ),
+    e.getBoundingClientRect()),
+    i = n.top,
+    s = n.bottom,
+    a = n.height,
+    u = (window.innerHeight || document.documentElement.clientHeight) - a / r;
+  return s >= (o ? a / r : 0) && i <= u;
+}
 var select = function(t) {
     return document.querySelector(t);
   },
@@ -510,6 +530,7 @@ var trim = function(t) {
 export {
   Request,
   capitalize,
+  isElementInViewport,
   parseMarkdownLinks,
   params as parseURLParams,
   scrollTo,

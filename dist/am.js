@@ -30,10 +30,10 @@ var AM = (function(t) {
             "[object Float32Array]",
             "[object Float64Array]"
           ],
-          o = function(t) {
+          n = function(t) {
             return t && DataView.prototype.isPrototypeOf(t);
           },
-          n =
+          o =
             ArrayBuffer.isView ||
             function(t) {
               return t && r.indexOf(Object.prototype.toString.call(t)) > -1;
@@ -114,7 +114,7 @@ var AM = (function(t) {
         (t.Request = b),
         (t.Response = w),
         (t.fetch = function(t, r) {
-          return new Promise(function(o, n) {
+          return new Promise(function(n, o) {
             var i = new b(t, r),
               s = new XMLHttpRequest();
             (s.onload = function() {
@@ -127,10 +127,10 @@ var AM = (function(t) {
                   (e = new h()),
                   t.split(/\r?\n/).forEach(function(t) {
                     var r = t.split(":"),
-                      o = r.shift().trim();
-                    if (o) {
-                      var n = r.join(":").trim();
-                      e.append(o, n);
+                      n = r.shift().trim();
+                    if (n) {
+                      var o = r.join(":").trim();
+                      e.append(n, o);
                     }
                   }),
                   e)
@@ -139,14 +139,14 @@ var AM = (function(t) {
                 "responseURL" in s
                   ? s.responseURL
                   : r.headers.get("X-Request-URL");
-              var n = "response" in s ? s.response : s.responseText;
-              o(new w(n, r));
+              var o = "response" in s ? s.response : s.responseText;
+              n(new w(o, r));
             }),
               (s.onerror = function() {
-                n(new TypeError("Network request failed"));
+                o(new TypeError("Network request failed"));
               }),
               (s.ontimeout = function() {
-                n(new TypeError("Network request failed"));
+                o(new TypeError("Network request failed"));
               }),
               s.open(i.method, i.url, !0),
               "include" === i.credentials && (s.withCredentials = !0),
@@ -239,13 +239,13 @@ var AM = (function(t) {
               URLSearchParams.prototype.isPrototypeOf(t)
             )
               this._bodyText = t.toString();
-            else if (e.arrayBuffer && e.blob && o(t))
+            else if (e.arrayBuffer && e.blob && n(t))
               (this._bodyArrayBuffer = p(t.buffer)),
                 (this._bodyInit = new Blob([this._bodyArrayBuffer]));
             else {
               if (
                 !e.arrayBuffer ||
-                (!ArrayBuffer.prototype.isPrototypeOf(t) && !n(t))
+                (!ArrayBuffer.prototype.isPrototypeOf(t) && !o(t))
               )
                 throw new Error("unsupported BodyInit type");
               this._bodyArrayBuffer = p(t);
@@ -283,8 +283,8 @@ var AM = (function(t) {
           var t,
             e,
             r,
-            o = c(this);
-          if (o) return o;
+            n = c(this);
+          if (n) return n;
           if (this._bodyBlob)
             return (
               (t = this._bodyBlob),
@@ -297,11 +297,11 @@ var AM = (function(t) {
             return Promise.resolve(
               (function(t) {
                 for (
-                  var e = new Uint8Array(t), r = new Array(e.length), o = 0;
-                  o < e.length;
-                  o++
+                  var e = new Uint8Array(t), r = new Array(e.length), n = 0;
+                  n < e.length;
+                  n++
                 )
-                  r[o] = String.fromCharCode(e[o]);
+                  r[n] = String.fromCharCode(e[n]);
                 return r.join("");
               })(this._bodyArrayBuffer)
             );
@@ -321,8 +321,8 @@ var AM = (function(t) {
     }
     function b(t, e) {
       var r,
-        o,
-        n = (e = e || {}).body;
+        n,
+        o = (e = e || {}).body;
       if (t instanceof b) {
         if (t.bodyUsed) throw new TypeError("Already read");
         (this.url = t.url),
@@ -330,20 +330,20 @@ var AM = (function(t) {
           e.headers || (this.headers = new h(t.headers)),
           (this.method = t.method),
           (this.mode = t.mode),
-          n || null == t._bodyInit || ((n = t._bodyInit), (t.bodyUsed = !0));
+          o || null == t._bodyInit || ((o = t._bodyInit), (t.bodyUsed = !0));
       } else this.url = String(t);
       if (
         ((this.credentials = e.credentials || this.credentials || "omit"),
         (!e.headers && this.headers) || (this.headers = new h(e.headers)),
         (this.method = ((r = e.method || this.method || "GET"),
-        (o = r.toUpperCase()),
-        i.indexOf(o) > -1 ? o : r)),
+        (n = r.toUpperCase()),
+        i.indexOf(n) > -1 ? n : r)),
         (this.mode = e.mode || this.mode || null),
         (this.referrer = null),
-        ("GET" === this.method || "HEAD" === this.method) && n)
+        ("GET" === this.method || "HEAD" === this.method) && o)
       )
         throw new TypeError("Body not allowed for GET or HEAD requests");
-      this._initBody(n);
+      this._initBody(o);
     }
     function m(t) {
       var e = new FormData();
@@ -354,9 +354,9 @@ var AM = (function(t) {
           .forEach(function(t) {
             if (t) {
               var r = t.split("="),
-                o = r.shift().replace(/\+/g, " "),
-                n = r.join("=").replace(/\+/g, " ");
-              e.append(decodeURIComponent(o), decodeURIComponent(n));
+                n = r.shift().replace(/\+/g, " "),
+                o = r.join("=").replace(/\+/g, " ");
+              e.append(decodeURIComponent(n), decodeURIComponent(o));
             }
           }),
         e
@@ -375,8 +375,8 @@ var AM = (function(t) {
   })("undefined" != typeof self ? self : void 0);
   var e = function t(e) {
     var r = this,
-      o = e.endpoint,
-      n = e.options;
+      n = e.endpoint,
+      o = e.options;
     !(function(t, e) {
       if (!(t instanceof e))
         throw new TypeError("Cannot call a class as a function");
@@ -393,16 +393,16 @@ var AM = (function(t) {
             : { async: !1 }
           ).async,
           e = Object.assign({}, r.prepareFetchOptions(), r.options),
-          o = fetch(r.endpoint, e);
+          n = fetch(r.endpoint, e);
         return t
-          ? o.then(function(t) {
+          ? n.then(function(t) {
               return t.json();
             })
-          : o;
+          : n;
       }),
-      (this.endpoint = o),
-      (this.options = n || t.defaultOptions),
-      (this.body = n && n.body);
+      (this.endpoint = n),
+      (this.options = o || t.defaultOptions),
+      (this.body = o && o.body);
   };
   e.defaultOptions = { method: "GET", headers: { Accept: "application/json" } };
   var r = (function() {
@@ -411,23 +411,23 @@ var AM = (function(t) {
       if (Symbol.iterator in Object(t))
         return (function(t, e) {
           var r = [],
-            o = !0,
-            n = !1,
+            n = !0,
+            o = !1,
             i = void 0;
           try {
             for (
               var s, a = t[Symbol.iterator]();
-              !(o = (s = a.next()).done) &&
+              !(n = (s = a.next()).done) &&
               (r.push(s.value), !e || r.length !== e);
-              o = !0
+              n = !0
             );
           } catch (t) {
-            (n = !0), (i = t);
+            (o = !0), (i = t);
           } finally {
             try {
-              !o && a.return && a.return();
+              !n && a.return && a.return();
             } finally {
-              if (n) throw i;
+              if (o) throw i;
             }
           }
           return r;
@@ -437,12 +437,12 @@ var AM = (function(t) {
       );
     };
   })();
-  var o = function(t) {
+  var n = function(t) {
     var e,
       r = ((e = t), Array.isArray(e) ? e : Array.from(e)),
-      o = r[0],
-      n = r.slice(1);
-    return "" + o.toUpperCase() + n.join("");
+      n = r[0],
+      o = r.slice(1);
+    return "" + n.toUpperCase() + o.join("");
   };
   return (
     (t.Request = e),
@@ -450,9 +450,30 @@ var AM = (function(t) {
       return t
         .split(" ")
         .map(function(t) {
-          return o(t);
+          return n(t);
         })
         .join(" ");
+    }),
+    (t.isElementInViewport = function(t) {
+      var e = t.element,
+        r = t.elementDivisorSize,
+        n = t.useBottomOffset,
+        o = (Object.assign(
+          {},
+          { elementDivisorSize: 1, useBottomOffset: !1 },
+          {
+            element: e,
+            elementDivisorSize: Math.ceil(Math.abs(r)),
+            useBottomOffset: n
+          }
+        ),
+        e.getBoundingClientRect()),
+        i = o.top,
+        s = o.bottom,
+        a = o.height,
+        u =
+          (window.innerHeight || document.documentElement.clientHeight) - a / r;
+      return s >= (n ? a / r : 0) && i <= u;
     }),
     (t.parseMarkdownLinks = function(t) {
       var e = /\[([^\]]+)\]\(([^)]+)\)/g;
@@ -470,18 +491,18 @@ var AM = (function(t) {
         .map(function(t) {
           return t.split("=");
         })
-        .reduce(function(t, e, o, n) {
+        .reduce(function(t, e, n, o) {
           var i = r(e, 2),
             s = i[0],
             a = i[1];
           return (t[s] = decodeURIComponent(a).replace(/\+/g, " ")), t;
         }, {});
     }),
-    (t.scrollTo = function t(e, r, o) {
-      if (!(o <= 0)) {
-        var n = (r - e.scrollTop) / o * 10;
+    (t.scrollTo = function t(e, r, n) {
+      if (!(n <= 0)) {
+        var o = (r - e.scrollTop) / n * 10;
         setTimeout(function() {
-          (e.scrollTop = e.scrollTop + n), e.scrollTop !== r && t(e, r, o - 10);
+          (e.scrollTop = e.scrollTop + o), e.scrollTop !== r && t(e, r, n - 10);
         }, 10);
       }
     }),
@@ -490,11 +511,11 @@ var AM = (function(t) {
     }),
     (t.selectAll = function(t) {
       for (
-        var e = [], r = document.querySelectorAll(t), o = 0;
-        o < r.length;
-        o++
+        var e = [], r = document.querySelectorAll(t), n = 0;
+        n < r.length;
+        n++
       )
-        e.push(r[o]);
+        e.push(r[n]);
       return e;
     }),
     (t.selectById = function(t) {
@@ -511,7 +532,7 @@ var AM = (function(t) {
     (t.trim = function(t) {
       return t.replace(/^\s+|\s$/g, "");
     }),
-    (t.ucFirst = o),
+    (t.ucFirst = n),
     t
   );
 })({});

@@ -42,55 +42,55 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
             function(t) {
               return t && r.indexOf(Object.prototype.toString.call(t)) > -1;
             };
-      (l.prototype.append = function(t, e) {
+      (f.prototype.append = function(t, e) {
         (t = a(t)), (e = u(e));
         var r = this.map[t];
         this.map[t] = r ? r + "," + e : e;
       }),
-        (l.prototype.delete = function(t) {
+        (f.prototype.delete = function(t) {
           delete this.map[a(t)];
         }),
-        (l.prototype.get = function(t) {
+        (f.prototype.get = function(t) {
           return (t = a(t)), this.has(t) ? this.map[t] : null;
         }),
-        (l.prototype.has = function(t) {
+        (f.prototype.has = function(t) {
           return this.map.hasOwnProperty(a(t));
         }),
-        (l.prototype.set = function(t, e) {
+        (f.prototype.set = function(t, e) {
           this.map[a(t)] = u(e);
         }),
-        (l.prototype.forEach = function(t, e) {
+        (f.prototype.forEach = function(t, e) {
           for (var r in this.map)
             this.map.hasOwnProperty(r) && t.call(e, this.map[r], r, this);
         }),
-        (l.prototype.keys = function() {
+        (f.prototype.keys = function() {
           var t = [];
           return (
             this.forEach(function(e, r) {
               t.push(r);
             }),
-            f(t)
+            l(t)
           );
         }),
-        (l.prototype.values = function() {
+        (f.prototype.values = function() {
           var t = [];
           return (
             this.forEach(function(e) {
               t.push(e);
             }),
-            f(t)
+            l(t)
           );
         }),
-        (l.prototype.entries = function() {
+        (f.prototype.entries = function() {
           var t = [];
           return (
             this.forEach(function(e, r) {
               t.push([r, e]);
             }),
-            f(t)
+            l(t)
           );
         }),
-        e.iterable && (l.prototype[Symbol.iterator] = l.prototype.entries);
+        e.iterable && (f.prototype[Symbol.iterator] = f.prototype.entries);
       var i = ["DELETE", "GET", "HEAD", "OPTIONS", "POST", "PUT"];
       (b.prototype.clone = function() {
         return new b(this, { body: this._bodyInit });
@@ -101,7 +101,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
           return new w(this._bodyInit, {
             status: this.status,
             statusText: this.statusText,
-            headers: new l(this.headers),
+            headers: new f(this.headers),
             url: this.url
           });
         }),
@@ -114,7 +114,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
         if (-1 === s.indexOf(e)) throw new RangeError("Invalid status code");
         return new w(null, { status: e, headers: { location: t } });
       }),
-        (t.Headers = l),
+        (t.Headers = f),
         (t.Request = b),
         (t.Response = w),
         (t.fetch = function(t, r) {
@@ -128,7 +128,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
                   status: s.status,
                   statusText: s.statusText,
                   headers: ((t = s.getAllResponseHeaders() || ""),
-                  (e = new l()),
+                  (e = new f()),
                   t.split(/\r?\n/).forEach(function(t) {
                     var r = t.split(":"),
                       o = r.shift().trim();
@@ -174,7 +174,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     function u(t) {
       return "string" != typeof t && (t = String(t)), t;
     }
-    function f(t) {
+    function l(t) {
       var r = {
         next: function() {
           var e = t.shift();
@@ -189,9 +189,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
         r
       );
     }
-    function l(t) {
+    function f(t) {
       (this.map = {}),
-        t instanceof l
+        t instanceof f
           ? t.forEach(function(t, e) {
               this.append(e, t);
             }, this)
@@ -331,14 +331,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
         if (t.bodyUsed) throw new TypeError("Already read");
         (this.url = t.url),
           (this.credentials = t.credentials),
-          e.headers || (this.headers = new l(t.headers)),
+          e.headers || (this.headers = new f(t.headers)),
           (this.method = t.method),
           (this.mode = t.mode),
           n || null == t._bodyInit || ((n = t._bodyInit), (t.bodyUsed = !0));
       } else this.url = String(t);
       if (
         ((this.credentials = e.credentials || this.credentials || "omit"),
-        (!e.headers && this.headers) || (this.headers = new l(e.headers)),
+        (!e.headers && this.headers) || (this.headers = new f(e.headers)),
         (this.method = ((r = e.method || this.method || "GET"),
         (o = r.toUpperCase()),
         i.indexOf(o) > -1 ? o : r)),
@@ -372,7 +372,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
         (this.status = "status" in e ? e.status : 200),
         (this.ok = this.status >= 200 && this.status < 300),
         (this.statusText = "statusText" in e ? e.statusText : "OK"),
-        (this.headers = new l(e.headers)),
+        (this.headers = new f(e.headers)),
         (this.url = e.url || ""),
         this._initBody(t);
     }
@@ -473,6 +473,26 @@ function scrollTo(t, e, r) {
     }, 10);
   }
 }
+function isElementInViewport(t) {
+  var e = t.element,
+    r = t.elementDivisorSize,
+    o = t.useBottomOffset,
+    n = (Object.assign(
+      {},
+      { elementDivisorSize: 1, useBottomOffset: !1 },
+      {
+        element: e,
+        elementDivisorSize: Math.ceil(Math.abs(r)),
+        useBottomOffset: o
+      }
+    ),
+    e.getBoundingClientRect()),
+    i = n.top,
+    s = n.bottom,
+    a = n.height,
+    u = (window.innerHeight || document.documentElement.clientHeight) - a / r;
+  return s >= (o ? a / r : 0) && i <= u;
+}
 var select = function(t) {
     return document.querySelector(t);
   },
@@ -514,6 +534,7 @@ var trim = function(t) {
   };
 (exports.Request = Request),
   (exports.capitalize = capitalize),
+  (exports.isElementInViewport = isElementInViewport),
   (exports.parseMarkdownLinks = parseMarkdownLinks),
   (exports.parseURLParams = params),
   (exports.scrollTo = scrollTo),
