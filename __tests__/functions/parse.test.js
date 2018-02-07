@@ -6,4 +6,3 @@ describe("parseURLParams tests", () => {
     expect(parseURLParams).toBeDefined();
   });
 });
-// parseMarkdownLinks
