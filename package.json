@@ -58,12 +58,14 @@
   },
   "jest": {
     "moduleDirectories": ["node_modules", "src", "dist"],
+    "rootDir": "./__tests__",
     "testPathIgnorePatterns": ["node_modules", "__tests__/__*"],
     "transform": {
       "^.+\\.js$": "babel-jest"
     }
   },
   "lint-staged": {
+    "*.{js,ts}": ["yarn test"],
     "*.{js,json,ts}": [
       "./node_modules/.bin/prettier --tab-width 2 --trailing-comma none --write",
       "git add"
