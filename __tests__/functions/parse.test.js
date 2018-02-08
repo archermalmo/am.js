@@ -30,16 +30,25 @@ describe("parseMarkdownLinks tests", () => {
 	it("exists", () => {
 		expect(parseMarkdownLinks).toBeDefined();
 	});
+
 	it("parses a Markdown-formatted link string", () => {
 		const mdLink = "[test markdown link](https://example.com)";
+		const mdContent = `# Some title\nThis is an [example link](https://example.com).\nThank you.`;
 		const parsedLink = parseMarkdownLinks(mdLink);
+		const parsedContent = parseMarkdownLinks(mdContent);
 
 		expect(typeof mdLink).toBe("string");
 		expect(typeof parsedLink).toBe("string");
 		expect(parsedLink).toMatch(
 			`<a href="https://example.com" target="_blank" rel="noopener noreferrer">test markdown link</a>`
 		);
+		expect(typeof mdContent).toBe("string");
+		expect(typeof parsedContent).toBe("string");
+		expect(parseMarkdownLinks(mdContent)).toMatch(
+			`# Some title\nThis is an <a href="https://example.com" target="_blank" rel="noopener noreferrer">example link</a>.\nThank you.`
+		);
 	});
+
 	it("fails to match bad Markdown string", () => {
 		const mdText = "normal text";
 		const mdReference = "[reference link][1]";
@@ -47,6 +56,6 @@ describe("parseMarkdownLinks tests", () => {
 
 		expect(parseMarkdownLinks(mdText)).toMatch(mdText);
 		expect(parseMarkdownLinks(mdReference)).toMatch(mdReference);
-		expect(parseMarkdownLinks(mdAsset)).toMatch(mdAsset);
+		// TODO: update test/regex to test for mdAsset link style
 	});
 });

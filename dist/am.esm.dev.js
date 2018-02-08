@@ -510,7 +510,7 @@ Request.defaultOptions = {
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 /**
- * From https://gist.github.com/geoffdavis92/1da7d0745e3bba036f94
+ * Base from https://gist.github.com/geoffdavis92/1da7d0745e3bba036f94
  * @name params
  * @description Creates object of key/value pairs from URL parameters.
  * @param {string} url URL to parse; defaults to `window.location.search`
@@ -535,7 +535,7 @@ var params = function params() {
  * @returns {string}
  */
 var parseMarkdownLinks = function parseMarkdownLinks(string) {
-    var pattern = /!{0}\[([^\]]+)\]\(([^)]+)\)/g;
+    var pattern = /\[([^\]]+)\]\(([^)]+)\)/g;
     if (string.search(pattern) > -1) {
         return string.replace(pattern, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
     } else {
