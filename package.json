@@ -67,8 +67,8 @@
 		}
 	},
 	"lint-staged": {
-		"{src,dist}/*.{js,ts}": ["yarn test"],
-		"{src,__tests__}/*.{js,json,ts}": [
+		"src/*.{js,ts}": ["yarn test"],
+		"src/*.{js,json,ts}": [
 			"./node_modules/.bin/prettier --tab-width 2 --trailing-comma none --write",
 			"git add"
 		]

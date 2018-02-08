@@ -1,538 +1,650 @@
-var AM = (function(t) {
-  "use strict";
-  !(function(t) {
-    if (!t.fetch) {
-      var e = {
-        searchParams: "URLSearchParams" in t,
-        iterable: "Symbol" in t && "iterator" in Symbol,
-        blob:
-          "FileReader" in t &&
-          "Blob" in t &&
-          (function() {
-            try {
-              return new Blob(), !0;
-            } catch (t) {
-              return !1;
-            }
-          })(),
-        formData: "FormData" in t,
-        arrayBuffer: "ArrayBuffer" in t
+var AM = (function (exports) {
+'use strict';
+
+(function (self) {
+  if (self.fetch) {
+    return;
+  }
+
+  var support = {
+    searchParams: 'URLSearchParams' in self,
+    iterable: 'Symbol' in self && 'iterator' in Symbol,
+    blob: 'FileReader' in self && 'Blob' in self && function () {
+      try {
+        new Blob();
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }(),
+    formData: 'FormData' in self,
+    arrayBuffer: 'ArrayBuffer' in self
+  };
+
+  if (support.arrayBuffer) {
+    var viewClasses = ['[object Int8Array]', '[object Uint8Array]', '[object Uint8ClampedArray]', '[object Int16Array]', '[object Uint16Array]', '[object Int32Array]', '[object Uint32Array]', '[object Float32Array]', '[object Float64Array]'];
+
+    var isDataView = function isDataView(obj) {
+      return obj && DataView.prototype.isPrototypeOf(obj);
+    };
+
+    var isArrayBufferView = ArrayBuffer.isView || function (obj) {
+      return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1;
+    };
+  }
+
+  function normalizeName(name) {
+    if (typeof name !== 'string') {
+      name = String(name);
+    }
+    if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+      throw new TypeError('Invalid character in header field name');
+    }
+    return name.toLowerCase();
+  }
+
+  function normalizeValue(value) {
+    if (typeof value !== 'string') {
+      value = String(value);
+    }
+    return value;
+  }
+
+  // Build a destructive iterator for the value list
+  function iteratorFor(items) {
+    var iterator = {
+      next: function next() {
+        var value = items.shift();
+        return { done: value === undefined, value: value };
+      }
+    };
+
+    if (support.iterable) {
+      iterator[Symbol.iterator] = function () {
+        return iterator;
       };
-      if (e.arrayBuffer)
-        var r = [
-            "[object Int8Array]",
-            "[object Uint8Array]",
-            "[object Uint8ClampedArray]",
-            "[object Int16Array]",
-            "[object Uint16Array]",
-            "[object Int32Array]",
-            "[object Uint32Array]",
-            "[object Float32Array]",
-            "[object Float64Array]"
-          ],
-          n = function(t) {
-            return t && DataView.prototype.isPrototypeOf(t);
-          },
-          o =
-            ArrayBuffer.isView ||
-            function(t) {
-              return t && r.indexOf(Object.prototype.toString.call(t)) > -1;
-            };
-      (h.prototype.append = function(t, e) {
-        (t = a(t)), (e = u(e));
-        var r = this.map[t];
-        this.map[t] = r ? r + "," + e : e;
-      }),
-        (h.prototype.delete = function(t) {
-          delete this.map[a(t)];
-        }),
-        (h.prototype.get = function(t) {
-          return (t = a(t)), this.has(t) ? this.map[t] : null;
-        }),
-        (h.prototype.has = function(t) {
-          return this.map.hasOwnProperty(a(t));
-        }),
-        (h.prototype.set = function(t, e) {
-          this.map[a(t)] = u(e);
-        }),
-        (h.prototype.forEach = function(t, e) {
-          for (var r in this.map)
-            this.map.hasOwnProperty(r) && t.call(e, this.map[r], r, this);
-        }),
-        (h.prototype.keys = function() {
-          var t = [];
-          return (
-            this.forEach(function(e, r) {
-              t.push(r);
-            }),
-            f(t)
-          );
-        }),
-        (h.prototype.values = function() {
-          var t = [];
-          return (
-            this.forEach(function(e) {
-              t.push(e);
-            }),
-            f(t)
-          );
-        }),
-        (h.prototype.entries = function() {
-          var t = [];
-          return (
-            this.forEach(function(e, r) {
-              t.push([r, e]);
-            }),
-            f(t)
-          );
-        }),
-        e.iterable && (h.prototype[Symbol.iterator] = h.prototype.entries);
-      var i = ["DELETE", "GET", "HEAD", "OPTIONS", "POST", "PUT"];
-      (b.prototype.clone = function() {
-        return new b(this, { body: this._bodyInit });
-      }),
-        y.call(b.prototype),
-        y.call(w.prototype),
-        (w.prototype.clone = function() {
-          return new w(this._bodyInit, {
-            status: this.status,
-            statusText: this.statusText,
-            headers: new h(this.headers),
-            url: this.url
-          });
-        }),
-        (w.error = function() {
-          var t = new w(null, { status: 0, statusText: "" });
-          return (t.type = "error"), t;
-        });
-      var s = [301, 302, 303, 307, 308];
-      (w.redirect = function(t, e) {
-        if (-1 === s.indexOf(e)) throw new RangeError("Invalid status code");
-        return new w(null, { status: e, headers: { location: t } });
-      }),
-        (t.Headers = h),
-        (t.Request = b),
-        (t.Response = w),
-        (t.fetch = function(t, r) {
-          return new Promise(function(n, o) {
-            var i = new b(t, r),
-              s = new XMLHttpRequest();
-            (s.onload = function() {
-              var t,
-                e,
-                r = {
-                  status: s.status,
-                  statusText: s.statusText,
-                  headers: ((t = s.getAllResponseHeaders() || ""),
-                  (e = new h()),
-                  t.split(/\r?\n/).forEach(function(t) {
-                    var r = t.split(":"),
-                      n = r.shift().trim();
-                    if (n) {
-                      var o = r.join(":").trim();
-                      e.append(n, o);
-                    }
-                  }),
-                  e)
-                };
-              r.url =
-                "responseURL" in s
-                  ? s.responseURL
-                  : r.headers.get("X-Request-URL");
-              var o = "response" in s ? s.response : s.responseText;
-              n(new w(o, r));
-            }),
-              (s.onerror = function() {
-                o(new TypeError("Network request failed"));
-              }),
-              (s.ontimeout = function() {
-                o(new TypeError("Network request failed"));
-              }),
-              s.open(i.method, i.url, !0),
-              "include" === i.credentials && (s.withCredentials = !0),
-              "responseType" in s && e.blob && (s.responseType = "blob"),
-              i.headers.forEach(function(t, e) {
-                s.setRequestHeader(e, t);
-              }),
-              s.send(void 0 === i._bodyInit ? null : i._bodyInit);
-          });
-        }),
-        (t.fetch.polyfill = !0);
     }
-    function a(t) {
-      if (
-        ("string" != typeof t && (t = String(t)),
-        /[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(t))
-      )
-        throw new TypeError("Invalid character in header field name");
-      return t.toLowerCase();
+
+    return iterator;
+  }
+
+  function Headers(headers) {
+    this.map = {};
+
+    if (headers instanceof Headers) {
+      headers.forEach(function (value, name) {
+        this.append(name, value);
+      }, this);
+    } else if (Array.isArray(headers)) {
+      headers.forEach(function (header) {
+        this.append(header[0], header[1]);
+      }, this);
+    } else if (headers) {
+      Object.getOwnPropertyNames(headers).forEach(function (name) {
+        this.append(name, headers[name]);
+      }, this);
     }
-    function u(t) {
-      return "string" != typeof t && (t = String(t)), t;
+  }
+
+  Headers.prototype.append = function (name, value) {
+    name = normalizeName(name);
+    value = normalizeValue(value);
+    var oldValue = this.map[name];
+    this.map[name] = oldValue ? oldValue + ',' + value : value;
+  };
+
+  Headers.prototype['delete'] = function (name) {
+    delete this.map[normalizeName(name)];
+  };
+
+  Headers.prototype.get = function (name) {
+    name = normalizeName(name);
+    return this.has(name) ? this.map[name] : null;
+  };
+
+  Headers.prototype.has = function (name) {
+    return this.map.hasOwnProperty(normalizeName(name));
+  };
+
+  Headers.prototype.set = function (name, value) {
+    this.map[normalizeName(name)] = normalizeValue(value);
+  };
+
+  Headers.prototype.forEach = function (callback, thisArg) {
+    for (var name in this.map) {
+      if (this.map.hasOwnProperty(name)) {
+        callback.call(thisArg, this.map[name], name, this);
+      }
     }
-    function f(t) {
-      var r = {
-        next: function() {
-          var e = t.shift();
-          return { done: void 0 === e, value: e };
+  };
+
+  Headers.prototype.keys = function () {
+    var items = [];
+    this.forEach(function (value, name) {
+      items.push(name);
+    });
+    return iteratorFor(items);
+  };
+
+  Headers.prototype.values = function () {
+    var items = [];
+    this.forEach(function (value) {
+      items.push(value);
+    });
+    return iteratorFor(items);
+  };
+
+  Headers.prototype.entries = function () {
+    var items = [];
+    this.forEach(function (value, name) {
+      items.push([name, value]);
+    });
+    return iteratorFor(items);
+  };
+
+  if (support.iterable) {
+    Headers.prototype[Symbol.iterator] = Headers.prototype.entries;
+  }
+
+  function consumed(body) {
+    if (body.bodyUsed) {
+      return Promise.reject(new TypeError('Already read'));
+    }
+    body.bodyUsed = true;
+  }
+
+  function fileReaderReady(reader) {
+    return new Promise(function (resolve, reject) {
+      reader.onload = function () {
+        resolve(reader.result);
+      };
+      reader.onerror = function () {
+        reject(reader.error);
+      };
+    });
+  }
+
+  function readBlobAsArrayBuffer(blob) {
+    var reader = new FileReader();
+    var promise = fileReaderReady(reader);
+    reader.readAsArrayBuffer(blob);
+    return promise;
+  }
+
+  function readBlobAsText(blob) {
+    var reader = new FileReader();
+    var promise = fileReaderReady(reader);
+    reader.readAsText(blob);
+    return promise;
+  }
+
+  function readArrayBufferAsText(buf) {
+    var view = new Uint8Array(buf);
+    var chars = new Array(view.length);
+
+    for (var i = 0; i < view.length; i++) {
+      chars[i] = String.fromCharCode(view[i]);
+    }
+    return chars.join('');
+  }
+
+  function bufferClone(buf) {
+    if (buf.slice) {
+      return buf.slice(0);
+    } else {
+      var view = new Uint8Array(buf.byteLength);
+      view.set(new Uint8Array(buf));
+      return view.buffer;
+    }
+  }
+
+  function Body() {
+    this.bodyUsed = false;
+
+    this._initBody = function (body) {
+      this._bodyInit = body;
+      if (!body) {
+        this._bodyText = '';
+      } else if (typeof body === 'string') {
+        this._bodyText = body;
+      } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+        this._bodyBlob = body;
+      } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+        this._bodyFormData = body;
+      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+        this._bodyText = body.toString();
+      } else if (support.arrayBuffer && support.blob && isDataView(body)) {
+        this._bodyArrayBuffer = bufferClone(body.buffer);
+        // IE 10-11 can't handle a DataView body.
+        this._bodyInit = new Blob([this._bodyArrayBuffer]);
+      } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
+        this._bodyArrayBuffer = bufferClone(body);
+      } else {
+        throw new Error('unsupported BodyInit type');
+      }
+
+      if (!this.headers.get('content-type')) {
+        if (typeof body === 'string') {
+          this.headers.set('content-type', 'text/plain;charset=UTF-8');
+        } else if (this._bodyBlob && this._bodyBlob.type) {
+          this.headers.set('content-type', this._bodyBlob.type);
+        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+          this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        }
+      }
+    };
+
+    if (support.blob) {
+      this.blob = function () {
+        var rejected = consumed(this);
+        if (rejected) {
+          return rejected;
+        }
+
+        if (this._bodyBlob) {
+          return Promise.resolve(this._bodyBlob);
+        } else if (this._bodyArrayBuffer) {
+          return Promise.resolve(new Blob([this._bodyArrayBuffer]));
+        } else if (this._bodyFormData) {
+          throw new Error('could not read FormData body as blob');
+        } else {
+          return Promise.resolve(new Blob([this._bodyText]));
         }
       };
-      return (
-        e.iterable &&
-          (r[Symbol.iterator] = function() {
-            return r;
-          }),
-        r
-      );
+
+      this.arrayBuffer = function () {
+        if (this._bodyArrayBuffer) {
+          return consumed(this) || Promise.resolve(this._bodyArrayBuffer);
+        } else {
+          return this.blob().then(readBlobAsArrayBuffer);
+        }
+      };
     }
-    function h(t) {
-      (this.map = {}),
-        t instanceof h
-          ? t.forEach(function(t, e) {
-              this.append(e, t);
-            }, this)
-          : Array.isArray(t)
-            ? t.forEach(function(t) {
-                this.append(t[0], t[1]);
-              }, this)
-            : t &&
-              Object.getOwnPropertyNames(t).forEach(function(e) {
-                this.append(e, t[e]);
-              }, this);
-    }
-    function c(t) {
-      if (t.bodyUsed) return Promise.reject(new TypeError("Already read"));
-      t.bodyUsed = !0;
-    }
-    function l(t) {
-      return new Promise(function(e, r) {
-        (t.onload = function() {
-          e(t.result);
-        }),
-          (t.onerror = function() {
-            r(t.error);
-          });
-      });
-    }
-    function d(t) {
-      var e = new FileReader(),
-        r = l(e);
-      return e.readAsArrayBuffer(t), r;
-    }
-    function p(t) {
-      if (t.slice) return t.slice(0);
-      var e = new Uint8Array(t.byteLength);
-      return e.set(new Uint8Array(t)), e.buffer;
-    }
-    function y() {
-      return (
-        (this.bodyUsed = !1),
-        (this._initBody = function(t) {
-          if (((this._bodyInit = t), t))
-            if ("string" == typeof t) this._bodyText = t;
-            else if (e.blob && Blob.prototype.isPrototypeOf(t))
-              this._bodyBlob = t;
-            else if (e.formData && FormData.prototype.isPrototypeOf(t))
-              this._bodyFormData = t;
-            else if (
-              e.searchParams &&
-              URLSearchParams.prototype.isPrototypeOf(t)
-            )
-              this._bodyText = t.toString();
-            else if (e.arrayBuffer && e.blob && n(t))
-              (this._bodyArrayBuffer = p(t.buffer)),
-                (this._bodyInit = new Blob([this._bodyArrayBuffer]));
-            else {
-              if (
-                !e.arrayBuffer ||
-                (!ArrayBuffer.prototype.isPrototypeOf(t) && !o(t))
-              )
-                throw new Error("unsupported BodyInit type");
-              this._bodyArrayBuffer = p(t);
-            }
-          else this._bodyText = "";
-          this.headers.get("content-type") ||
-            ("string" == typeof t
-              ? this.headers.set("content-type", "text/plain;charset=UTF-8")
-              : this._bodyBlob && this._bodyBlob.type
-                ? this.headers.set("content-type", this._bodyBlob.type)
-                : e.searchParams &&
-                  URLSearchParams.prototype.isPrototypeOf(t) &&
-                  this.headers.set(
-                    "content-type",
-                    "application/x-www-form-urlencoded;charset=UTF-8"
-                  ));
-        }),
-        e.blob &&
-          ((this.blob = function() {
-            var t = c(this);
-            if (t) return t;
-            if (this._bodyBlob) return Promise.resolve(this._bodyBlob);
-            if (this._bodyArrayBuffer)
-              return Promise.resolve(new Blob([this._bodyArrayBuffer]));
-            if (this._bodyFormData)
-              throw new Error("could not read FormData body as blob");
-            return Promise.resolve(new Blob([this._bodyText]));
-          }),
-          (this.arrayBuffer = function() {
-            return this._bodyArrayBuffer
-              ? c(this) || Promise.resolve(this._bodyArrayBuffer)
-              : this.blob().then(d);
-          })),
-        (this.text = function() {
-          var t,
-            e,
-            r,
-            n = c(this);
-          if (n) return n;
-          if (this._bodyBlob)
-            return (
-              (t = this._bodyBlob),
-              (e = new FileReader()),
-              (r = l(e)),
-              e.readAsText(t),
-              r
-            );
-          if (this._bodyArrayBuffer)
-            return Promise.resolve(
-              (function(t) {
-                for (
-                  var e = new Uint8Array(t), r = new Array(e.length), n = 0;
-                  n < e.length;
-                  n++
-                )
-                  r[n] = String.fromCharCode(e[n]);
-                return r.join("");
-              })(this._bodyArrayBuffer)
-            );
-          if (this._bodyFormData)
-            throw new Error("could not read FormData body as text");
-          return Promise.resolve(this._bodyText);
-        }),
-        e.formData &&
-          (this.formData = function() {
-            return this.text().then(m);
-          }),
-        (this.json = function() {
-          return this.text().then(JSON.parse);
-        }),
-        this
-      );
-    }
-    function b(t, e) {
-      var r,
-        n,
-        o = (e = e || {}).body;
-      if (t instanceof b) {
-        if (t.bodyUsed) throw new TypeError("Already read");
-        (this.url = t.url),
-          (this.credentials = t.credentials),
-          e.headers || (this.headers = new h(t.headers)),
-          (this.method = t.method),
-          (this.mode = t.mode),
-          o || null == t._bodyInit || ((o = t._bodyInit), (t.bodyUsed = !0));
-      } else this.url = String(t);
-      if (
-        ((this.credentials = e.credentials || this.credentials || "omit"),
-        (!e.headers && this.headers) || (this.headers = new h(e.headers)),
-        (this.method = ((r = e.method || this.method || "GET"),
-        (n = r.toUpperCase()),
-        i.indexOf(n) > -1 ? n : r)),
-        (this.mode = e.mode || this.mode || null),
-        (this.referrer = null),
-        ("GET" === this.method || "HEAD" === this.method) && o)
-      )
-        throw new TypeError("Body not allowed for GET or HEAD requests");
-      this._initBody(o);
-    }
-    function m(t) {
-      var e = new FormData();
-      return (
-        t
-          .trim()
-          .split("&")
-          .forEach(function(t) {
-            if (t) {
-              var r = t.split("="),
-                n = r.shift().replace(/\+/g, " "),
-                o = r.join("=").replace(/\+/g, " ");
-              e.append(decodeURIComponent(n), decodeURIComponent(o));
-            }
-          }),
-        e
-      );
-    }
-    function w(t, e) {
-      e || (e = {}),
-        (this.type = "default"),
-        (this.status = "status" in e ? e.status : 200),
-        (this.ok = this.status >= 200 && this.status < 300),
-        (this.statusText = "statusText" in e ? e.statusText : "OK"),
-        (this.headers = new h(e.headers)),
-        (this.url = e.url || ""),
-        this._initBody(t);
-    }
-  })("undefined" != typeof self ? self : void 0);
-  var e = function t(e) {
-    var r = this,
-      n = e.endpoint,
-      o = e.options;
-    !(function(t, e) {
-      if (!(t instanceof e))
-        throw new TypeError("Cannot call a class as a function");
-    })(this, t),
-      (this.prepareFetchOptions = function() {
-        return (
-          r.body || "POST" !== r.options.method || (r.body = new FormData()),
-          r.body
-        );
-      }),
-      (this.send = function() {
-        var t = (arguments.length > 0 && void 0 !== arguments[0]
-            ? arguments[0]
-            : { async: !1 }
-          ).async,
-          e = Object.assign({}, r.prepareFetchOptions(), r.options),
-          n = fetch(r.endpoint, e);
-        return t
-          ? n.then(function(t) {
-              return t.json();
-            })
-          : n;
-      }),
-      (this.endpoint = n),
-      (this.options = o || t.defaultOptions),
-      (this.body = o && o.body);
-  };
-  e.defaultOptions = { method: "GET", headers: { Accept: "application/json" } };
-  var r = (function() {
-    return function(t, e) {
-      if (Array.isArray(t)) return t;
-      if (Symbol.iterator in Object(t))
-        return (function(t, e) {
-          var r = [],
-            n = !0,
-            o = !1,
-            i = void 0;
-          try {
-            for (
-              var s, a = t[Symbol.iterator]();
-              !(n = (s = a.next()).done) &&
-              (r.push(s.value), !e || r.length !== e);
-              n = !0
-            );
-          } catch (t) {
-            (o = !0), (i = t);
-          } finally {
-            try {
-              !n && a.return && a.return();
-            } finally {
-              if (o) throw i;
-            }
-          }
-          return r;
-        })(t, e);
-      throw new TypeError(
-        "Invalid attempt to destructure non-iterable instance"
-      );
-    };
-  })();
-  var n = function(t) {
-    var e,
-      r = ((e = t), Array.isArray(e) ? e : Array.from(e)),
-      n = r[0],
-      o = r.slice(1);
-    return "" + n.toUpperCase() + o.join("");
-  };
-  return (
-    (t.Request = e),
-    (t.capitalize = function(t) {
-      return t
-        .split(" ")
-        .map(function(t) {
-          return n(t);
-        })
-        .join(" ");
-    }),
-    (t.isElementInViewport = function(t) {
-      var e = t.element,
-        r = t.elementDivisorSize,
-        n = t.useBottomOffset,
-        o = (Object.assign(
-          {},
-          { elementDivisorSize: 1, useBottomOffset: !1 },
-          {
-            element: e,
-            elementDivisorSize: Math.ceil(Math.abs(r)),
-            useBottomOffset: n
-          }
-        ),
-        e.getBoundingClientRect()),
-        i = o.top,
-        s = o.bottom,
-        a = o.height,
-        u =
-          (window.innerHeight || document.documentElement.clientHeight) - a / r;
-      return s >= (n ? a / r : 0) && i <= u;
-    }),
-    (t.parseMarkdownLinks = function(t) {
-      var e = /\[([^\]]+)\]\(([^)]+)\)/g;
-      return t.search(e) > -1
-        ? t.replace(
-            e,
-            '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
-          )
-        : t;
-    }),
-    (t.parseURLParams = function() {
-      return window.location.search
-        .split("?")[1]
-        .split("&")
-        .map(function(t) {
-          return t.split("=");
-        })
-        .reduce(function(t, e, n, o) {
-          var i = r(e, 2),
-            s = i[0],
-            a = i[1];
-          return (t[s] = decodeURIComponent(a).replace(/\+/g, " ")), t;
-        }, {});
-    }),
-    (t.scrollTo = function t(e, r, n) {
-      if (!(n <= 0)) {
-        var o = (r - e.scrollTop) / n * 10;
-        setTimeout(function() {
-          (e.scrollTop = e.scrollTop + o), e.scrollTop !== r && t(e, r, n - 10);
-        }, 10);
+
+    this.text = function () {
+      var rejected = consumed(this);
+      if (rejected) {
+        return rejected;
       }
-    }),
-    (t.select = function(t) {
-      return document.querySelector(t);
-    }),
-    (t.selectAll = function(t) {
-      for (
-        var e = [], r = document.querySelectorAll(t), n = 0;
-        n < r.length;
-        n++
-      )
-        e.push(r[n]);
-      return e;
-    }),
-    (t.selectById = function(t) {
-      return document.getElementById(t);
-    }),
-    (t.slugify = function(t) {
-      var e =
-        arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : "-";
-      return t
-        .replace(/(\!|#|\$|%|\*|\.|\/|\\|\(|\)|\+|\||\,|\:|\'|\")/g, "")
-        .replace(/(.)(\s|\_|\-)+(.)/g, "$1" + e + "$3")
-        .toLowerCase();
-    }),
-    (t.trim = function(t) {
-      return t.replace(/^\s+|\s$/g, "");
-    }),
-    (t.ucFirst = n),
-    t
-  );
-})({});
+
+      if (this._bodyBlob) {
+        return readBlobAsText(this._bodyBlob);
+      } else if (this._bodyArrayBuffer) {
+        return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer));
+      } else if (this._bodyFormData) {
+        throw new Error('could not read FormData body as text');
+      } else {
+        return Promise.resolve(this._bodyText);
+      }
+    };
+
+    if (support.formData) {
+      this.formData = function () {
+        return this.text().then(decode);
+      };
+    }
+
+    this.json = function () {
+      return this.text().then(JSON.parse);
+    };
+
+    return this;
+  }
+
+  // HTTP methods whose capitalization should be normalized
+  var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT'];
+
+  function normalizeMethod(method) {
+    var upcased = method.toUpperCase();
+    return methods.indexOf(upcased) > -1 ? upcased : method;
+  }
+
+  function Request(input, options) {
+    options = options || {};
+    var body = options.body;
+
+    if (input instanceof Request) {
+      if (input.bodyUsed) {
+        throw new TypeError('Already read');
+      }
+      this.url = input.url;
+      this.credentials = input.credentials;
+      if (!options.headers) {
+        this.headers = new Headers(input.headers);
+      }
+      this.method = input.method;
+      this.mode = input.mode;
+      if (!body && input._bodyInit != null) {
+        body = input._bodyInit;
+        input.bodyUsed = true;
+      }
+    } else {
+      this.url = String(input);
+    }
+
+    this.credentials = options.credentials || this.credentials || 'omit';
+    if (options.headers || !this.headers) {
+      this.headers = new Headers(options.headers);
+    }
+    this.method = normalizeMethod(options.method || this.method || 'GET');
+    this.mode = options.mode || this.mode || null;
+    this.referrer = null;
+
+    if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+      throw new TypeError('Body not allowed for GET or HEAD requests');
+    }
+    this._initBody(body);
+  }
+
+  Request.prototype.clone = function () {
+    return new Request(this, { body: this._bodyInit });
+  };
+
+  function decode(body) {
+    var form = new FormData();
+    body.trim().split('&').forEach(function (bytes) {
+      if (bytes) {
+        var split = bytes.split('=');
+        var name = split.shift().replace(/\+/g, ' ');
+        var value = split.join('=').replace(/\+/g, ' ');
+        form.append(decodeURIComponent(name), decodeURIComponent(value));
+      }
+    });
+    return form;
+  }
+
+  function parseHeaders(rawHeaders) {
+    var headers = new Headers();
+    rawHeaders.split(/\r?\n/).forEach(function (line) {
+      var parts = line.split(':');
+      var key = parts.shift().trim();
+      if (key) {
+        var value = parts.join(':').trim();
+        headers.append(key, value);
+      }
+    });
+    return headers;
+  }
+
+  Body.call(Request.prototype);
+
+  function Response(bodyInit, options) {
+    if (!options) {
+      options = {};
+    }
+
+    this.type = 'default';
+    this.status = 'status' in options ? options.status : 200;
+    this.ok = this.status >= 200 && this.status < 300;
+    this.statusText = 'statusText' in options ? options.statusText : 'OK';
+    this.headers = new Headers(options.headers);
+    this.url = options.url || '';
+    this._initBody(bodyInit);
+  }
+
+  Body.call(Response.prototype);
+
+  Response.prototype.clone = function () {
+    return new Response(this._bodyInit, {
+      status: this.status,
+      statusText: this.statusText,
+      headers: new Headers(this.headers),
+      url: this.url
+    });
+  };
+
+  Response.error = function () {
+    var response = new Response(null, { status: 0, statusText: '' });
+    response.type = 'error';
+    return response;
+  };
+
+  var redirectStatuses = [301, 302, 303, 307, 308];
+
+  Response.redirect = function (url, status) {
+    if (redirectStatuses.indexOf(status) === -1) {
+      throw new RangeError('Invalid status code');
+    }
+
+    return new Response(null, { status: status, headers: { location: url } });
+  };
+
+  self.Headers = Headers;
+  self.Request = Request;
+  self.Response = Response;
+
+  self.fetch = function (input, init) {
+    return new Promise(function (resolve, reject) {
+      var request = new Request(input, init);
+      var xhr = new XMLHttpRequest();
+
+      xhr.onload = function () {
+        var options = {
+          status: xhr.status,
+          statusText: xhr.statusText,
+          headers: parseHeaders(xhr.getAllResponseHeaders() || '')
+        };
+        options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL');
+        var body = 'response' in xhr ? xhr.response : xhr.responseText;
+        resolve(new Response(body, options));
+      };
+
+      xhr.onerror = function () {
+        reject(new TypeError('Network request failed'));
+      };
+
+      xhr.ontimeout = function () {
+        reject(new TypeError('Network request failed'));
+      };
+
+      xhr.open(request.method, request.url, true);
+
+      if (request.credentials === 'include') {
+        xhr.withCredentials = true;
+      }
+
+      if ('responseType' in xhr && support.blob) {
+        xhr.responseType = 'blob';
+      }
+
+      request.headers.forEach(function (value, name) {
+        xhr.setRequestHeader(name, value);
+      });
+
+      xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
+    });
+  };
+  self.fetch.polyfill = true;
+})(typeof self !== 'undefined' ? self : undefined);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Request =
+// Constructor
+function Request(_ref) {
+    var _this = this;
+
+    var endpoint = _ref.endpoint,
+        options = _ref.options,
+        body = _ref.body;
+
+    _classCallCheck(this, Request);
+
+    // Private methods
+    /**
+     * @name prepareFetchOptions
+     * @description Creates blank FormData object if this.body is undefined and this.options.method is equal to "POST"
+     * @returns {FormData}
+     */
+    this.prepareFetchOptions = function () {
+        if (!_this.body && _this.options.method === "POST") {
+            _this.body = new FormData();
+        }
+        return _this.body;
+    };
+    // Public methods
+    /**
+     * @name send
+     * @param	{object} options Allows property `async` to be set to indicate the response should be prepared before returning
+     * @returns {Promise}
+     */
+    this.send = function () {
+        var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { async: false },
+            async = _ref2.async;
+
+        var preparedOptions = Object.assign({}, _this.prepareFetchOptions(), _this.options);
+        var initFetch = fetch(_this.endpoint, preparedOptions);
+        return async ? initFetch.then(function (res) {
+            return res.json();
+        }) : initFetch;
+    };
+    this.endpoint = endpoint;
+    this.options = options || Request.defaultOptions;
+    this.body = body;
+};
+// Static properties
+
+
+Request.defaultOptions = {
+    method: "GET",
+    headers: { Accept: "application/json" }
+};
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+/**
+ * From https://gist.github.com/geoffdavis92/1da7d0745e3bba036f94
+ * @name params
+ * @description Creates object of key/value pairs from URL parameters.
+ * @param {string} url URL to parse; defaults to `window.location.search`
+ * @return {object} Object of key/value pairs.
+ */
+var params = function params() {
+    var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location.search;
+    return url.split("?")[1].split("&").map(function (q) {
+        return q.split("=");
+    }).reduce(function (acc, _ref, i, arr) {
+        var _ref2 = _slicedToArray(_ref, 2),
+            key = _ref2[0],
+            val = _ref2[1];
+
+        acc[key] = decodeURIComponent(val).replace(/\+/g, " ");
+        return acc;
+    }, {});
+};
+/**
+ * @name parseMarkdownLinks
+ * @param {string} string String to parse as Markdown link
+ * @returns {string}
+ */
+var parseMarkdownLinks = function parseMarkdownLinks(string) {
+    var pattern = /!{0}\[([^\]]+)\]\(([^)]+)\)/g;
+    if (string.search(pattern) > -1) {
+        return string.replace(pattern, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    } else {
+        return string;
+    }
+};
+
+/**
+ * From http://bit.ly/2cP65fD
+ * @name scrollTo
+ * @description Scrolls given element to determined point.
+ * @param  {Element} element  [description]
+ * @param  {number} to       [description]
+ * @param  {number} duration [description]
+ * @return {void}          [description]
+ */
+function scrollTo(element, to, duration) {
+    if (duration <= 0) return;
+    var difference = to - element.scrollTop;
+    var perTick = difference / duration * 10;
+    setTimeout(function () {
+        element.scrollTop = element.scrollTop + perTick;
+        if (element.scrollTop === to) return;
+        scrollTo(element, to, duration - 10);
+    }, 10);
+}
+/**
+ * @name isElementInViewport
+ * @description Determines if a given element is partially or
+ * fully visible in the viewport.
+ * @param {object} config Config object
+ * @return {boolean}
+ */
+function isElementInViewport(_ref) {
+    var element = _ref.element,
+        elementDivisorSize = _ref.elementDivisorSize,
+        useBottomOffset = _ref.useBottomOffset;
+
+    var defaultParams = { elementDivisorSize: 1, useBottomOffset: false };
+    var safeArgs = Object.assign({}, defaultParams, {
+        element: element,
+        elementDivisorSize: Math.ceil(Math.abs(elementDivisorSize)),
+        useBottomOffset: useBottomOffset
+    });
+
+    var _element$getBoundingC = element.getBoundingClientRect(),
+        top = _element$getBoundingC.top,
+        bottom = _element$getBoundingC.bottom,
+        height = _element$getBoundingC.height;
+
+    var triggerTop = (window.innerHeight || document.documentElement.clientHeight) - height / elementDivisorSize;
+    var triggerBottom = useBottomOffset ? height / elementDivisorSize : 0;
+    return bottom >= triggerBottom && top <= triggerTop;
+}
+
+var select = function select(query) {
+    return document.querySelector(query);
+};
+var selectAll = function selectAll(query) {
+    var elementArray = [];
+    var allMatches = document.querySelectorAll(query);
+    for (var i = 0; i < allMatches.length; i++) {
+        elementArray.push(allMatches[i]);
+    }
+    return elementArray;
+};
+var selectById = function selectById(id) {
+    return document.getElementById(id);
+};
+
+function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
+
+var trim = function trim(string) {
+    return string.replace(/^\s+|\s$/g, "");
+};
+var ucFirst = function ucFirst(_ref) {
+    var _ref2 = _toArray(_ref),
+        firstLetter = _ref2[0],
+        restLetters = _ref2.slice(1);
+
+    return "" + firstLetter.toUpperCase() + restLetters.join("");
+};
+var capitalize = function capitalize(string) {
+    return string.split(" ").map(function (s) {
+        return ucFirst(s);
+    }).join(" ");
+};
+var slugify = function slugify(textToSlug) {
+    var delimiter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "-";
+
+    return textToSlug.replace(/(\!|#|\$|%|\*|\.|\/|\\|\(|\)|\+|\||\,|\:|\'|\")/g, "").replace(/(.)(\s|\_|\-)+(.)/g, "$1" + delimiter + "$3").toLowerCase();
+};
+
+exports.Request = Request;
+exports.capitalize = capitalize;
+exports.isElementInViewport = isElementInViewport;
+exports.parseMarkdownLinks = parseMarkdownLinks;
+exports.parseURLParams = params;
+exports.scrollTo = scrollTo;
+exports.select = select;
+exports.selectAll = selectAll;
+exports.selectById = selectById;
+exports.slugify = slugify;
+exports.trim = trim;
+exports.ucFirst = ucFirst;
+
+return exports;
+
+}({}));
