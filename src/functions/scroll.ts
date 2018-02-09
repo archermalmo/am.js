@@ -1,29 +1,15 @@
 /**
- * From http://bit.ly/2cP65fD
- * @name scrollTo
- * @description Scrolls given element to determined point.
- * @param  {Element} element  [description]
- * @param  {number} to       [description]
- * @param  {number} duration [description]
- * @return {void}          [description]
- */
-function scrollTo(element: Element, to: number, duration: number): void {
-  if (duration <= 0) return;
-  const difference: number = to - element.scrollTop;
-  const perTick: number = difference / duration * 10;
-
-  setTimeout(function() {
-    element.scrollTop = element.scrollTop + perTick;
-    if (element.scrollTop === to) return;
-    scrollTo(element, to, duration - 10);
-  }, 10);
-}
-
-/**
  * @name isElementInViewport
  * @description Determines if a given element is partially or
  * fully visible in the viewport.
- * @param {object} config Config object
+ * @param {object} config Config object.
+ * @property {Element} element HTML Element node to target.
+ * @property {number} elementDivisorSize Size of division of
+ * element's height to offset. E.g. 2 is half the height, 3
+ * is one-third the height, etc.
+ * @property {boolean} useBottomOffset Determines if offset
+ * generated from elementDivisorSize should be applied to
+ * the bottom of the element.
  * @return {boolean}
  */
 function isElementInViewport({
@@ -49,14 +35,45 @@ function isElementInViewport({
     }
   };
 
-  const { top, bottom, height } = element.getBoundingClientRect();
+  const {
+    top,
+    bottom,
+    height
+  }: {
+    top: number;
+    bottom: number;
+    height: number;
+  } = element.getBoundingClientRect();
 
-  const triggerTop =
+  const triggerTop: number =
     (window.innerHeight || document.documentElement.clientHeight) -
     height / elementDivisorSize;
-  const triggerBottom = useBottomOffset ? height / elementDivisorSize : 0;
+  const triggerBottom: number = useBottomOffset
+    ? height / elementDivisorSize
+    : 0;
 
   return bottom >= triggerBottom && top <= triggerTop;
+}
+
+/**
+ * From http://bit.ly/2cP65fD
+ * @name scrollTo
+ * @description Scrolls given element to determined point.
+ * @param  {Element} element  [description]
+ * @param  {number} to       [description]
+ * @param  {number} duration [description]
+ * @return {void}          [description]
+ */
+function scrollTo(element: Element, to: number, duration: number): void {
+  if (duration <= 0) return;
+  const difference: number = to - element.scrollTop;
+  const perTick: number = difference / duration * 10;
+
+  setTimeout(function() {
+    element.scrollTop = element.scrollTop + perTick;
+    if (element.scrollTop === to) return;
+    scrollTo(element, to, duration - 10);
+  }, 10);
 }
 
 export { isElementInViewport, scrollTo };

@@ -547,29 +547,17 @@ var parseMarkdownLinks = function parseMarkdownLinks(string) {
 };
 
 /**
- * From http://bit.ly/2cP65fD
- * @name scrollTo
- * @description Scrolls given element to determined point.
- * @param  {Element} element  [description]
- * @param  {number} to       [description]
- * @param  {number} duration [description]
- * @return {void}          [description]
- */
-function scrollTo(element, to, duration) {
-    if (duration <= 0) return;
-    var difference = to - element.scrollTop;
-    var perTick = difference / duration * 10;
-    setTimeout(function () {
-        element.scrollTop = element.scrollTop + perTick;
-        if (element.scrollTop === to) return;
-        scrollTo(element, to, duration - 10);
-    }, 10);
-}
-/**
  * @name isElementInViewport
  * @description Determines if a given element is partially or
  * fully visible in the viewport.
- * @param {object} config Config object
+ * @param {object} config Config object.
+ * @property {Element} element HTML Element node to target.
+ * @property {number} elementDivisorSize Size of division of
+ * element's height to offset. E.g. 2 is half the height, 3
+ * is one-third the height, etc.
+ * @property {boolean} useBottomOffset Determines if offset
+ * generated from elementDivisorSize should be applied to
+ * the bottom of the element.
  * @return {boolean}
  */
 function isElementInViewport(_ref) {
@@ -592,6 +580,25 @@ function isElementInViewport(_ref) {
     var triggerTop = (window.innerHeight || document.documentElement.clientHeight) - height / elementDivisorSize;
     var triggerBottom = useBottomOffset ? height / elementDivisorSize : 0;
     return bottom >= triggerBottom && top <= triggerTop;
+}
+/**
+ * From http://bit.ly/2cP65fD
+ * @name scrollTo
+ * @description Scrolls given element to determined point.
+ * @param  {Element} element  [description]
+ * @param  {number} to       [description]
+ * @param  {number} duration [description]
+ * @return {void}          [description]
+ */
+function scrollTo(element, to, duration) {
+    if (duration <= 0) return;
+    var difference = to - element.scrollTop;
+    var perTick = difference / duration * 10;
+    setTimeout(function () {
+        element.scrollTop = element.scrollTop + perTick;
+        if (element.scrollTop === to) return;
+        scrollTo(element, to, duration - 10);
+    }, 10);
 }
 
 var select = function select(query) {
