@@ -14,8 +14,8 @@
  */
 function isElementInViewport({
   element,
-  elementDivisorSize,
-  useBottomOffset
+  elementDivisorSize: argElementDivisorSize,
+  useBottomOffset: argUseBottomOffset
 }: {
   element: Element;
   elementDivisorSize: number;
@@ -29,11 +29,14 @@ function isElementInViewport({
   const safeArgs = {
     ...defaultParams,
     ...{
-      element,
-      elementDivisorSize: Math.ceil(Math.abs(elementDivisorSize)),
-      useBottomOffset
+      elementDivisorSize: Math.ceil(
+        Math.abs(argElementDivisorSize || defaultParams.elementDivisorSize)
+      ),
+      useBottomOffset: argUseBottomOffset || defaultParams.useBottomOffset
     }
   };
+
+  const { elementDivisorSize, useBottomOffset } = safeArgs;
 
   const {
     top,
