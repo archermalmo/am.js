@@ -2,4 +2,5 @@
 demo
 node_modules 
 *log 
-*cache 
+*cache  
+__tests__/coverage
