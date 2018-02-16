@@ -398,21 +398,6 @@ babel-plugin-jest-hoist@^22.2.0:
   version "22.2.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-22.2.0.tgz#bd34f39d652406669713b8c89e23ef25c890b993"
 
-babel-plugin-macros@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-macros/-/babel-plugin-macros-2.1.0.tgz#e978fd4c5ee9cca73a809c176524c2e9f4dcccbf"
-  dependencies:
-    cosmiconfig "^4.0.0"
-
-babel-plugin-preval@^1.6.2:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/babel-plugin-preval/-/babel-plugin-preval-1.6.3.tgz#df784357410a9762f01bf0c5705e2c070eac3ccb"
-  dependencies:
-    babel-plugin-macros "^2.0.0"
-    babel-register "^6.26.0"
-    babylon "^6.18.0"
-    require-from-string "^2.0.1"
-
 babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-async-functions/-/babel-plugin-syntax-async-functions-6.13.0.tgz#cad9cad1191b5ad634bf30ae0872391e0647be95"
@@ -3005,12 +2990,6 @@ pretty-format@^22.1.0:
   dependencies:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
-
-preval.macro@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/preval.macro/-/preval.macro-1.0.2.tgz#1a0043f67719c0816e8526f7e3975df47d525b24"
-  dependencies:
-    babel-plugin-preval "^1.6.2"
 
 private@^0.1.6, private@^0.1.7:
   version "0.1.8"
