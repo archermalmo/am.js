@@ -1,7 +1,7 @@
 const jest = require("jest");
 const {
 	parseURLParams,
-	parseMarkdownLinks
+	parseExternalMarkdownLinks
 } = require("../../src/functions/parse"); //require("../../dist/am.cjs.js");
 
 describe("parseURLParams tests", () => {
@@ -26,16 +26,16 @@ describe("parseURLParams tests", () => {
 	});
 });
 
-describe("parseMarkdownLinks tests", () => {
+describe("parseExternalMarkdownLinks tests", () => {
 	it("exists", () => {
-		expect(parseMarkdownLinks).toBeDefined();
+		expect(parseExternalMarkdownLinks).toBeDefined();
 	});
 
 	it("parses a Markdown-formatted link string", () => {
 		const mdLink = "[test markdown link](https://example.com)";
 		const mdContent = `# Some title\nThis is an [example link](https://example.com).\nThank you.`;
-		const parsedLink = parseMarkdownLinks(mdLink);
-		const parsedContent = parseMarkdownLinks(mdContent);
+		const parsedLink = parseExternalMarkdownLinks(mdLink);
+		const parsedContent = parseExternalMarkdownLinks(mdContent);
 
 		expect(typeof mdLink).toBe("string");
 		expect(typeof parsedLink).toBe("string");
@@ -44,7 +44,7 @@ describe("parseMarkdownLinks tests", () => {
 		);
 		expect(typeof mdContent).toBe("string");
 		expect(typeof parsedContent).toBe("string");
-		expect(parseMarkdownLinks(mdContent)).toMatch(
+		expect(parseExternalMarkdownLinks(mdContent)).toMatch(
 			`# Some title\nThis is an <a href="https://example.com" target="_blank" rel="noopener noreferrer">example link</a>.\nThank you.`
 		);
 	});
@@ -54,8 +54,8 @@ describe("parseMarkdownLinks tests", () => {
 		const mdReference = "[reference link][1]";
 		const mdAsset = "![alt text](https://example.com/image.jpg)";
 
-		expect(parseMarkdownLinks(mdText)).toMatch(mdText);
-		expect(parseMarkdownLinks(mdReference)).toMatch(mdReference);
+		expect(parseExternalMarkdownLinks(mdText)).toMatch(mdText);
+		expect(parseExternalMarkdownLinks(mdReference)).toMatch(mdReference);
 		// TODO: update test/regex to test for mdAsset link style
 	});
 });

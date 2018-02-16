@@ -1,6 +1,6 @@
 const jest = require("jest");
 const mock = require("jest-mock");
-const { select, selectAll, selectById } = require("../../dist/am.cjs.js");
+const { select, selectAll, selectById } = require("../../src/functions/select");
 
 const mockHTML = `<section>
 <article>

@@ -1,6 +1,11 @@
 const jest = require("jest");
 const mock = require("jest-mock");
-const { capitalize, slugify, trim, ucFirst } = require("../../dist/am.cjs.js");
+const {
+	capitalize,
+	slugify,
+	trim,
+	ucFirst
+} = require("../../src/functions/typography");
 
 const uncappedString = "the quick brown fox jumped over the lazy dog.";
 const postTitleString = "The Quick Brown Fox!";
