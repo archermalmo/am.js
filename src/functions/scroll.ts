@@ -3,11 +3,11 @@
  * @description Determines if a given element is partially or
  * fully visible in the viewport.
  * @param {object} config Config object.
- * @property {Element} element HTML Element node to target.
- * @property {number} elementDivisorSize Size of division of
+ * @var {Element} element HTML Element node to target.
+ * @var {number} elementDivisorSize Size of division of
  * element's height to offset. E.g. 2 is half the height, 3
  * is one-third the height, etc.
- * @property {boolean} useBottomOffset Determines if offset
+ * @var {boolean} useBottomOffset Determines if offset
  * generated from elementDivisorSize should be applied to
  * the bottom of the element.
  * @return {boolean}

@@ -2,7 +2,7 @@ import { Request } from "./classes/";
 import {
   capitalize,
   isElementInViewport,
-  parseMarkdownLinks,
+  parseExternalMarkdownLinks,
   parseURLParams,
   scrollTo,
   select,
@@ -19,7 +19,7 @@ export {
   // functions
   capitalize,
   isElementInViewport,
-  parseMarkdownLinks,
+  parseExternalMarkdownLinks,
   parseURLParams,
   scrollTo,
   select,

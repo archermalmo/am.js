@@ -16,11 +16,15 @@ const params = (url: string = window.location.search): object =>
     }, {});
 
 /**
- * @name parseMarkdownLinks
+ * @name parseExternalMarkdownLinks
+ * @description Transforms Markdown links to use target="_blank", rel="noopener noreferrer";
+ * usually used when implementing clientside Markdown, before sending the Markdown to the main
+ * parsing function.
  * @param {string} string String to parse as Markdown link
+ * @var {RegExp} pattern Pattern to test for Markdown-formatted links
  * @returns {string}
  */
-const parseMarkdownLinks = (string: string): string => {
+const parseExternalMarkdownLinks = (string: string): string => {
   const pattern: RegExp = /\[([^\]]+)\]\(([^)]+)\)/g;
   if (string.search(pattern) > -1) {
     return string.replace(
@@ -32,4 +36,4 @@ const parseMarkdownLinks = (string: string): string => {
   }
 };
 
-export { params as parseURLParams, parseMarkdownLinks };
+export { params as parseURLParams, parseExternalMarkdownLinks };
