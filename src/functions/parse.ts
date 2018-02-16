@@ -1,6 +1,10 @@
 /**
+ * @module parse
+ */
+
+/**
  * Base from https://gist.github.com/geoffdavis92/1da7d0745e3bba036f94
- * @name params
+ * @function params
  * @description Creates object of key/value pairs from URL parameters.
  * @param {string} url URL to parse; defaults to `window.location.search`
  * @return {object} Object of key/value pairs.
@@ -16,13 +20,13 @@ const params = (url: string = window.location.search): object =>
     }, {});
 
 /**
- * @name parseExternalMarkdownLinks
+ * @function parseExternalMarkdownLinks
  * @description Transforms Markdown links to use target="_blank", rel="noopener noreferrer";
  * usually used when implementing clientside Markdown, before sending the Markdown to the main
- * parsing function.
+ * parsing function
  * @param {string} string String to parse as Markdown link
- * @var {RegExp} pattern Pattern to test for Markdown-formatted links
- * @returns {string}
+ * @returns {string} HTML link with URL and innerText, target and rel attributes properly set for
+ * an external link
  */
 const parseExternalMarkdownLinks = (string: string): string => {
   const pattern: RegExp = /\[([^\]]+)\]\(([^)]+)\)/g;

@@ -1,16 +1,21 @@
 /**
- * @name isElementInViewport
+ * @module scroll
+ */
+
+/**
+ * @function isElementInViewport
  * @description Determines if a given element is partially or
  * fully visible in the viewport.
- * @param {object} config Config object.
- * @var {Element} element HTML Element node to target.
- * @var {number} elementDivisorSize Size of division of
+ * @param {object} config
+ * @param {Element} config.element HTML Element node to target.
+ * @param {number} [config.elementDivisorSize] Size of division of
  * element's height to offset. E.g. 2 is half the height, 3
  * is one-third the height, etc.
- * @var {boolean} useBottomOffset Determines if offset
+ * @param {boolean} [config.useBottomOffset] Determines if offset
  * generated from elementDivisorSize should be applied to
  * the bottom of the element.
- * @return {boolean}
+ * @return {boolean} Boolean describing if input is fully/partially
+ * in the viewport, relative to the config settings
  */
 function isElementInViewport({
   element,
@@ -60,12 +65,12 @@ function isElementInViewport({
 
 /**
  * From http://bit.ly/2cP65fD
- * @name scrollTo
+ * @function scrollTo
  * @description Scrolls given element to determined point.
  * @param  {Element} element  [description]
  * @param  {number} to       [description]
  * @param  {number} duration [description]
- * @return {void}          [description]
+ * @return {void}
  */
 function scrollTo(element: Element, to: number, duration: number): void {
   if (duration <= 0) return;
