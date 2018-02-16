@@ -15,7 +15,7 @@
  * generated from elementDivisorSize should be applied to
  * the bottom of the element.
  * @return {boolean} Boolean describing if input is fully/partially
- * in the viewport, relative to the config settings
+ * in the viewport, relative to the config settings.
  */
 function isElementInViewport({
   element,
@@ -65,6 +65,7 @@ function isElementInViewport({
 
 /**
  * From http://bit.ly/2cP65fD
+ * @todo Classify and describe params.
  * @function scrollTo
  * @description Scrolls given element to determined point.
  * @param  {Element} element  [description]
