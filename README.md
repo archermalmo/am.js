@@ -10,9 +10,11 @@ This project is an internal Javascript library of useful utility classes and fun
 
 Many utilities in am.js are able to be used cross-environment. To support browsers, module systems, and node.js, this library is built into three different distributions: 
 
-* IIFE
-* CommonJS module
-* ES2015 module
+* [IIFE](#iife)
+* [CommonJS module](#commonjs-modules)
+* [ES2015 module](#es2015-modules)
+
+All build targets also have [development builds](#environment-specific-builds) for ease-of-use during initial development.
 
 ### IIFE
 
@@ -26,12 +28,61 @@ Now, am.js utilities are available to be used under the global object `AM`.
 
 ```javascript
 const siteNavElement = AM.select("nav#site");
+// -> <nav id="site">…</nav>
 
 const titleCaseMessage = AM.capitalize("hello world");
+// -> 'Hello World'
 
-const dataRequest = new AM.Request("https://example.com/");
-dataRequest.send();
+const dataRequest = new AM.Request({ endpoint: "https://example.com/" });
+dataRequest.send().then(res => res.json()).then(console.log);
+// -> { some: 'data' }
 ```
+
+### CommonJS Modules
+
+Use the `require()` function to target the CommonJS build in a file intended to be used in a node.js program or CommonJS module system.
+
+```javascript
+const { trim, capitalize } = require("am.cjs");
+
+capitalize(trim("  hello world     "));
+// -> "Hello World"
+```
+
+### ES2015 Modules
+
+Use the `import ... from "..."` syntax to target the ECMAScript Module build in a file intended to be used in an ES6+ environment or module system (e.g. a Webpack bundle).
+
+```javascript
+import { selectById, slugify, Request } from "am.esm"
+
+const titleText = selectById("title").innerText;
+// -> "Hello World"
+
+const sluggedTitle = slugify(titleText);
+// -> "hello-world"
+
+const postTitle = new Request({ endpoint: "https://api.example.com/", options: { method: "POST" }, body: JSON.stringify(sluggedTitle) });
+
+const postResponse = postTitle.send();
+
+postResponse.then(console.log);
+// -> { status: 200, ok: true, …}
+```
+
+### Environment-Specific Builds
+
+All environment targets have development builds, denoted by a `.dev` before the Javascript file extension:
+
+* IIFE: `am.dev.js`
+* CommonJS: `am.cjs.dev.js`
+* ES2015: `am.esm.dev.js`
+
+These builds are non-uglified, with sourcemaps and documenting comments in place; they should only be used in development environments/stages, and switched to non-development builds before deploying to production.
+
+Non-development builds are uglified and minified to provide the most performant bundle possible. 
+
+In order to get the most out of the library and include the least amount of code, it is recommended to use a build tool such as Webpack alongside the `.esm` or `.cjs` module distributions.
 
 ## Contributing
 
