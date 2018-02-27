@@ -1,7 +1,5 @@
 import fetchPonyfill from "../vendor/fetchPonyfill";
 
-const { fetch } = fetchPonyfill({});
-
 type RequestInitializationObject = {
   endpoint?: string;
   options?: RequestInit;
@@ -62,6 +60,13 @@ class Request {
    * @returns {Promise}
    */
   public send = ({ async }: { async: boolean } = { async: false }) => {
+    const { fetch } = window
+      ? window.fetch ? window : fetchPonyfill({}).fetch
+      : {
+          fetch: () => {
+            console.warn("fetch is not supported");
+          }
+        };
     const preparedOptions = Object.assign(
       {},
       this.prepareFetchOptions(),
