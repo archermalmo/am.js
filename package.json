@@ -13,6 +13,7 @@
 		"babel-jest": "^22.2.0",
 		"babel-plugin-transform-object-assign": "^6.22.0",
 		"babel-preset-env": "^1.6.1",
+		"fetch-ponyfill": "^5.0.1",
 		"httpster": "^1.0.3",
 		"husky": "^0.14.3",
 		"jest": "^22.2.1",
@@ -23,12 +24,12 @@
 		"rollup": "^0.54.1",
 		"rollup-plugin-babel": "^3.0.3",
 		"rollup-plugin-minify-es": "^1.1.1",
-		"rollup-plugin-replace": "^2.0.0",
 		"rollup-plugin-typescript2": "^0.10.0",
 		"ts-jest": "^22.0.1",
 		"typescript": "^2.6.2",
 		"whatwg-fetch": "^2.0.3"
 	},
+	"dependencies": {},
 	"scripts": {
 		"h": "./node_modules/.bin/httpster -p 4004",
 		"r": "./node_modules/.bin/rollup -c",
@@ -43,13 +44,17 @@
 		"test:watch": "yarn test --watch"
 	},
 	"babel": {
-		"plugins": ["transform-object-assign"],
+		"plugins": [
+			"transform-object-assign"
+		],
 		"presets": [
 			[
 				"env",
 				{
 					"target": {
-						"browsers": ["last 2 versions"]
+						"browsers": [
+							"last 2 versions"
+						]
 					},
 					"modules": false
 				}
@@ -58,10 +63,23 @@
 	},
 	"jest": {
 		"rootDir": "./__tests__",
-		"moduleDirectories": ["node_modules", "src", "dist"],
-		"moduleFileExtensions": ["ts", "js"],
-		"testPathIgnorePatterns": ["node_modules", "__tests__/coverage"],
-		"collectCoverageFrom": ["src/**/*.{js,ts}", "!**/node_modules/**"],
+		"moduleDirectories": [
+			"node_modules",
+			"src",
+			"dist"
+		],
+		"moduleFileExtensions": [
+			"ts",
+			"js"
+		],
+		"testPathIgnorePatterns": [
+			"node_modules",
+			"__tests__/coverage"
+		],
+		"collectCoverageFrom": [
+			"src/**/*.{js,ts}",
+			"!**/node_modules/**"
+		],
 		"transform": {
 			"^.+\\.js$": "babel-jest",
 			"^.+\\.ts$": "ts-jest"
