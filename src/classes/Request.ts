@@ -1,4 +1,6 @@
-import "whatwg-fetch";
+import fetchPonyfill from "../vendor/fetchPonyfill";
+
+const { fetch } = fetchPonyfill({});
 
 type RequestInitializationObject = {
   endpoint?: string;
