@@ -6,6 +6,33 @@ This project is an internal Javascript library of useful utility classes and fun
 
 *Coming soon*
 
+## Usage
+
+Many utilities in am.js are able to be used cross-environment. To support browsers, module systems, and node.js, this library is built into three different distributions: 
+
+* IIFE
+* CommonJS module
+* ES2015 module
+
+### IIFE
+
+Add the following `script` tag to your HTML:
+
+```html
+<script src="/path/to/am.js"></script>
+```
+
+Now, am.js utilities are available to be used under the global object `AM`.
+
+```javascript
+const siteNavElement = AM.select("nav#site");
+
+const titleCaseMessage = AM.capitalize("hello world");
+
+const dataRequest = new AM.Request("https://example.com/");
+dataRequest.send();
+```
+
 ## Contributing
 
 ### Adding functions or classes by PR
