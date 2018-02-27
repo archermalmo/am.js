@@ -7,7 +7,8 @@
  * of `fetchPonyfill` function scope.
  */
 const fetchPonyfill = function fetchPonyfill(options) {
-  var self = typeof self === "undefined" ? window : self;
+  var window = window ? window : false;
+  var self = typeof self === "undefined" ? (window ? window : global) : self;
   var Promise = (options && options.Promise) || self.Promise;
   var XMLHttpRequest =
     (options && options.XMLHttpRequest) || self.XMLHttpRequest;
