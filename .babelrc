@@ -1,0 +1,14 @@
+{
+	"plugins": ["transform-object-assign"],
+	"presets": [
+		[
+			"env",
+			{
+				"target": {
+					"browsers": ["last 2 versions"]
+				},
+				"modules": false
+			}
+		]
+	]
+}

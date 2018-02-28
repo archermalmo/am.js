@@ -6,6 +6,7 @@
 	"main": "dist/am.cjs.js",
 	"jsnext:main": "dist/am.esm.js",
 	"module": "dist/am.esm.js",
+	"include": ["README.md", "dist", "src"],
 	"devDependencies": {
 		"@types/es6-promise": "^3.3.0",
 		"babel-core": "^6.26.0",
@@ -41,20 +42,6 @@
 		"test": "jest -u",
 		"test:coverage": "yarn test --coverage --watch",
 		"test:watch": "yarn test --watch"
-	},
-	"babel": {
-		"plugins": ["transform-object-assign"],
-		"presets": [
-			[
-				"env",
-				{
-					"target": {
-						"browsers": ["last 2 versions"]
-					},
-					"modules": false
-				}
-			]
-		]
 	},
 	"jest": {
 		"rootDir": "./__tests__",
