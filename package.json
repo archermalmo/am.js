@@ -3,7 +3,6 @@
 	"version": "0.0.1",
 	"author": "Geoff Davis <gdavis@archermalmo.com>",
 	"license": "MIT",
-	"private": false,
 	"main": "dist/am.cjs.js",
 	"jsnext:main": "dist/am.esm.js",
 	"module": "dist/am.esm.js",
