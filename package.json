@@ -1,12 +1,16 @@
 {
 	"name": "@archermalmo/am.js",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"author": "Geoff Davis <gdavis@archermalmo.com>",
 	"license": "MIT",
 	"main": "dist/am.cjs.js",
 	"jsnext:main": "dist/am.esm.js",
 	"module": "dist/am.esm.js",
-	"files": ["README.md", "dist", "src"],
+	"files": [
+		"README.md",
+		"dist",
+		"src"
+	],
 	"devDependencies": {
 		"@types/es6-promise": "^3.3.0",
 		"babel-core": "^6.26.0",
@@ -45,10 +49,23 @@
 	},
 	"jest": {
 		"rootDir": "./__tests__",
-		"moduleDirectories": ["node_modules", "src", "dist"],
-		"moduleFileExtensions": ["ts", "js"],
-		"testPathIgnorePatterns": ["node_modules", "__tests__/coverage"],
-		"collectCoverageFrom": ["src/**/*.{js,ts}", "!**/node_modules/**"],
+		"moduleDirectories": [
+			"node_modules",
+			"src",
+			"dist"
+		],
+		"moduleFileExtensions": [
+			"ts",
+			"js"
+		],
+		"testPathIgnorePatterns": [
+			"node_modules",
+			"__tests__/coverage"
+		],
+		"collectCoverageFrom": [
+			"src/**/*.{js,ts}",
+			"!**/node_modules/**"
+		],
 		"transform": {
 			"^.+\\.js$": "babel-jest",
 			"^.+\\.ts$": "ts-jest"
