@@ -16,7 +16,7 @@ or `npm`:
 $ npm i --save-dev @archermalmo/am.js
 ```
 
-You can use `am.js` without installing via npm/yarn as well; include a script tag in the `head` of your document that points to the [Unpkg]() distribution:
+You can use `am.js` without installing via npm/yarn as well; include a script tag in the `head` of your document that points to the [Unpkg](https://unpkg.com/) distribution:
 
 ```html
 <script src="https://unpkg.com/@archermalmo/am.js"></script>
