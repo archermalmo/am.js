@@ -4,7 +4,13 @@ This project is an internal Javascript library of useful utility classes and fun
 
 ## Installation
 
-*Coming soon*
+You can install using `yarn`:
+
+`$ yarn add -D @archermalmo/am.js`
+
+or `npm`:
+
+`$ npm i --save-dev @archermalmo/am.js`
 
 ## Usage
 
