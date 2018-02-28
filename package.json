@@ -1,6 +1,6 @@
 {
 	"name": "@archermalmo/am.js",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"author": "Geoff Davis <gdavis@archermalmo.com>",
 	"license": "MIT",
 	"main": "dist/am.cjs.js",
