@@ -6,11 +6,23 @@ This project is an internal Javascript library of useful utility classes and fun
 
 You can install using `yarn`:
 
-`$ yarn add -D @archermalmo/am.js`
+```terminal 
+$ yarn add -D @archermalmo/am.js
+```
 
 or `npm`:
 
-`$ npm i --save-dev @archermalmo/am.js`
+```terminal
+$ npm i --save-dev @archermalmo/am.js
+```
+
+You can use `am.js` without installing via npm/yarn as well; include a script tag in the `head` of your document that points to the [Unpkg]() distribution:
+
+```html
+<script src="https://unpkg.com/@archermalmo/am.js"></script>
+```
+
+This will pull in the production version of the [IIFE build](#iife).
 
 ## Usage
 
