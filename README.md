@@ -1,3 +1,12 @@
+<p align="center">
+	<img alt="npm version" src="https://img.shields.io/npm/v/@archermalmo/am.js.svg?style=flat">
+	<img alt="npm downloads" src="https://img.shields.io/npm/dt/@archermalmo/am.js.svg?style=flat">
+	<img alt="license" src="https://img.shields.io/npm/l/@archermalmo/am.js.svg?style=flat">
+	<img alt="travis-ci status" src="https://img.shields.io/travis/archermalmo/am.js.svg?style=flat">
+	<img alt="docs site status" src="https://img.shields.io/website-up-down-green-red/http/archermalmo.github.io/am.js.svg?style=flat&label=Docs%20Site">
+	<img alt="release date" src="https://img.shields.io/github/release-date/archermalmo/am.js.svg?style=flat">
+</p>
+
 # am.js
 
 This project is an internal Javascript library of useful utility classes and functions that can be shared and maintained across Archer Malmo's Digital department.
