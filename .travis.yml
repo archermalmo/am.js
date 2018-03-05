@@ -2,6 +2,9 @@ language: node_js
 node_js:
   - "8"
   - "lts/*"
+branches:
+  skip:
+  - docs
 cache: 
   directories:
     - "node_modules"
