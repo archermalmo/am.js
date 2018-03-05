@@ -544,8 +544,6 @@ var parseExternalMarkdownLinks = function parseExternalMarkdownLinks(string) {
     }
 };
 
-var _extends$1 = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 /**
  * @module scroll
  */
@@ -553,38 +551,40 @@ var _extends$1 = Object.assign || function (target) { for (var i = 1; i < argume
  * @function isElementInViewport
  * @description Determines if a given element is partially or
  * fully visible in the viewport.
- * @param {object} config
- * @param {Element} config.element HTML Element node to target.
- * @param {number} [config.elementDivisorSize] Size of division of
- * element's height to offset. E.g. 2 is half the height, 3
- * is one-third the height, etc.
- * @param {boolean} [config.useBottomOffset] Determines if offset
- * generated from elementDivisorSize should be applied to
- * the bottom of the element.
+ * @param {Element} element HTML Element node to target.
+ * @param {number} threshold Ratio of the viewport height the element
+ * must fill before being considered visible. E.g. 0.5 means the element
+ * must take up 50% of the screen before returning true. Defaults to 0.25.
+ * Only useful for elements taller than the viewport; ignored for shorter
+ * elements.
  * @return {boolean} Boolean describing if input is fully/partially
- * in the viewport, relative to the config settings.
+ * in the viewport, relative to the threshold setting.
  */
-function isElementInViewport(_ref) {
-    var element = _ref.element,
-        argElementDivisorSize = _ref.elementDivisorSize,
-        argUseBottomOffset = _ref.useBottomOffset;
-
-    var defaultParams = { elementDivisorSize: 1, useBottomOffset: false };
-    var safeArgs = _extends$1({}, defaultParams, {
-        elementDivisorSize: Math.ceil(Math.abs(argElementDivisorSize || defaultParams.elementDivisorSize)),
-        useBottomOffset: argUseBottomOffset || defaultParams.useBottomOffset
-    });
-    var elementDivisorSize = safeArgs.elementDivisorSize,
-        useBottomOffset = safeArgs.useBottomOffset;
-
-    var _element$getBoundingC = element.getBoundingClientRect(),
-        top = _element$getBoundingC.top,
-        bottom = _element$getBoundingC.bottom,
-        height = _element$getBoundingC.height;
-
-    var triggerTop = (window.innerHeight || document.documentElement.clientHeight) - height / elementDivisorSize;
-    var triggerBottom = useBottomOffset ? height / elementDivisorSize : 0;
-    return bottom >= triggerBottom && top <= triggerTop;
+function isElementInViewport(element, threshold) {
+    var rect = element.getBoundingClientRect();
+    var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    if (threshold === undefined) {
+        threshold = 0.25;
+    } else {
+        if (threshold < 0 || threshold > 1) {
+            throw new RangeError('Threshold argument must be a decimal between 0 and 1');
+        }
+    }
+    //If the element is too tall to fit within the viewport
+    if (rect.height >= threshold * viewportHeight) {
+        if (rect.top - viewportHeight <= threshold * viewportHeight * -1 && rect.bottom >= threshold * viewportHeight) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        //If the element is short enough to fit within the viewport
+        if (rect.top >= 0 && rect.bottom - viewportHeight <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 /**
  * From http://bit.ly/2cP65fD
