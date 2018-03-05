@@ -4,7 +4,7 @@ node_js:
   - "lts/*"
 branches:
   skip:
-  - docs
+    - docs
 cache: 
   directories:
     - "node_modules"
