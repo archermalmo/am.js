@@ -139,6 +139,25 @@ To get started developing this library, follow these steps to get started:
 5. Run `[npm|yarn] test` to run a one-off test run; running `[npm|yarn] run test:watch` will start a watch process for tests
 6. Once additions have been properly tested, run `[npm|yarn] run build` to build the module bundles into `dist`
 
+### Testing
+
+Testing for `am.js` is taken care of in two different ways: **unit tests** and **continuous integration**.
+
+#### Unit Tests
+
+The library unit tests, located in `__tests__` are written in [Jest](https://facebook.github.io/jest/), an open-source Javascript unit testing framework from Facebook. It is quite versatile, allowing tests to be run against simple value comparisons, or more complex tests involving mocking DOM nodes.
+
+As noted above, you can run these test suites two different ways:
+
+1. `yarn run test`: runs through each test suite, and outputs a report based on how many tests and suites passed or failed.
+2. `yarn run test:watch`: starts a watch process that runs through tests as they or their dependencies are changed. Following the command line interface's prompts, you can configure the process to only watch certain tests, e.g. ones that follow a regex pattern, only tests that have changed since the last run, etc.
+
+#### Continuous Integration
+
+This library is also tested after a `push` event is triggered on the Github repo, including any branch push or pull request openings; these tests are handled in a continuous integration, or CI, environment. `am.js` code is tested using the [TravisCI tool](https://travis-ci.com/).
+
+While local unit tests ensure during development that code is properly tested and error-free, they are ran at the discresion of a developer; CI tests are automatically ran against the same tests when code changes occur or new branch code is available.
+
 ### Notes
 
 Below is a list of repo-related notes/gotchas that are useful to know when working on this project or interacting with this repo:
