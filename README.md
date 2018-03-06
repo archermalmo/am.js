@@ -38,6 +38,8 @@ You can use `am.js` without installing via npm/yarn as well; include a script ta
 
 This will pull in the production version of the [IIFE build](#iife).
 
+Lastly, you can grab a ZIP or TAR download of the [latest release on Github](/archermalmo/am.js/releases/latest).
+
 ## Usage
 
 Many utilities in am.js are able to be used cross-environment. To support browsers, module systems, and node.js, this library is built into three different distributions: 
