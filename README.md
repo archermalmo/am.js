@@ -138,3 +138,9 @@ To get started developing this library, follow these steps to get started:
 4. Tests should be written against each added function/class; all tests are located in the `__tests__` directory.
 5. Run `[npm|yarn] test` to run a one-off test run; running `[npm|yarn] run test:watch` will start a watch process for tests
 6. Once additions have been properly tested, run `[npm|yarn] run build` to build the module bundles into `dist`
+
+### Notes
+
+Below is a list of repo-related notes/gotchas that are useful to know when working on this project or interacting with this repo:
+
+- TravisCI build is disabled for the `docs` branch; no library changes should be made on this branch. Still, adding `[skip ci]` at the beginning of the commit message is useful for preventing these commits from triggering a build when merged into `master` branch.
