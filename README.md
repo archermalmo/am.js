@@ -2,7 +2,12 @@
 	<img alt="npm version" src="https://img.shields.io/npm/v/@archermalmo/am.js.svg?style=flat">
 	<img alt="npm downloads" src="https://img.shields.io/npm/dt/@archermalmo/am.js.svg?style=flat">
 	<img alt="license" src="https://img.shields.io/npm/l/@archermalmo/am.js.svg?style=flat">
-	<img alt="travis-ci status" src="https://img.shields.io/travis/archermalmo/am.js.svg?style=flat">
+	<a href="https://travis-ci.org/archermalmo/am.js" target="_blank" rel="noopener noreferrer">
+	  <img alt="travis-ci status" src="https://img.shields.io/travis/archermalmo/am.js.svg?style=flat">
+	</a>
+	<a href="https://codecov.io/gh/archermalmo/am.js" target="_blank" rel="noopener noreferrer">
+	  <img src="https://img.shields.io/codecov/c/github/archermalmo/am.js/master.svg?style=flat" />
+	</a>
 	<img alt="docs site status" src="https://img.shields.io/website-up-down-green-red/http/archermalmo.github.io/am.js.svg?style=flat&label=Docs%20Site">
 	<img alt="release date" src="https://img.shields.io/github/release-date/archermalmo/am.js.svg?style=flat">
 </p>
@@ -118,7 +123,7 @@ In order to get the most out of the library and include the least amount of code
 If you have a class or function that you think should be added, complete the following steps:
 
 1. Fork this repository.
-2. Create a [feature branch](https://www.google.com/search?q=What+is+a+feature+branch+in+git) in git using your name.
+2. Create a [feature branch](https://www.google.com/search?q=What+is+a+feature+branch+in+git) in git using a name that describes the feature/bug/addition you are updating/fixing/adding.
 3. Add your class or function to the related module under the respective directory in `src`; for example, a function that logs the how much of a page has been scrolled would go under `src/functions/scroll.ts`.
 4. If possible, please add some light documentation of the class/function's parameters and variable types using the [JSDoc](http://usejsdoc.org/) specification. (see an [example here](https://github.com/archermalmo/am.js/blob/ffe72906a865fc71651258619ca9ce2557aff98e/src/functions/parse.ts#L1-L7))
 5. Open a pull request on this package to your feature branch.
@@ -128,8 +133,8 @@ If you have a class or function that you think should be added, complete the fol
 To get started developing this library, follow these steps to get started:
 
 1. Run `npm i` or `yarn` to install dependencies
-2. Run `[npm|yarn] start` to start the Rollup (JS bundler) in development mode
-3. All modules are written in [Typescript](), and are located in `src`; functions are included in modules by category, and classes are their own modules
+2. Run `[npm|yarn] start` to start the Rollup (JS bundler) in development mode; note, it is recommended to also run the `test:watch` script alongside the development process, to catch preliminary bugs in the test suite(s) (see #5).
+3. All modules are written in [Typescript](https://www.typescriptlang.org/), and are located in `src`; functions are included in modules by category, and classes are their own modules
 4. Tests should be written against each added function/class; all tests are located in the `__tests__` directory.
 5. Run `[npm|yarn] test` to run a one-off test run; running `[npm|yarn] run test:watch` will start a watch process for tests
 6. Once additions have been properly tested, run `[npm|yarn] run build` to build the module bundles into `dist`
