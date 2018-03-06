@@ -154,7 +154,7 @@ As noted above, you can run these test suites two different ways:
 
 #### Continuous Integration
 
-This library is also tested after a `push` event is triggered on the Github repo, including any branch push or pull request openings; these tests are handled in a continuous integration, or CI, environment. `am.js` code is tested using the [TravisCI tool](https://travis-ci.com/).
+This library is also tested after a `push` event is triggered on the Github repo, including any branch push or pull request openings. These tests are handled in a continuous integration, or CI, environment; this repo's code is tested using [TravisCI](https://travis-ci.com/).
 
 While local unit tests ensure during development that code is properly tested and error-free, they are ran at the discresion of a developer; CI tests are automatically ran against the same tests when code changes occur or new branch code is available.
 
