@@ -1,8 +1,5 @@
 const jest = require("jest");
-const {
-	parseURLParams,
-	parseExternalMarkdownLinks
-} = require("../../src/functions/parse"); //require("../../dist/am.cjs.js");
+const { parseURLParams, parseExternalMarkdownLinks } = require("../../src/"); //require("../../dist/am.cjs.js");
 
 describe("parseURLParams tests", () => {
 	it("exists", () => {

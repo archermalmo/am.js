@@ -48,7 +48,7 @@
 		"build": "NODE_ENV=production yarn rollup",
 		"clean": "rm -r dist .rpt2_cache",
 		"docs":
-			"yarn run rollup && yarn run test:coverage && npx jsdoc dist/am.esm.js -p -c jsdoc.config.js -R ./README.md && rm -r docs/coverage ; cp -r __tests__/coverage/lcov-report/ docs/coverage/",
+			"yarn run rollup && yarn run test:coverage && npx jsdoc dist/am.esm.js -p -c jsdoc.config.js -R ./README.md && rm -r docs/coverage; cp -r __tests__/coverage/lcov-report/ docs/coverage/",
 		"precommit": "lint-staged",
 		"rollup": "yarn r",
 		"start": "yarn rollup --watch",
@@ -61,11 +61,7 @@
 		"moduleFileExtensions": ["ts", "js"],
 		"testPathIgnorePatterns": ["node_modules", "__tests__/coverage"],
 		"collectCoverage": true,
-		"collectCoverageFrom": [
-			"src/classes/Request.ts",
-			"src/functions/{parse,scroll,select,typography}.ts",
-			"!**/node_modules/**"
-		],
+		"collectCoverageFrom": ["src/{classes,functions}/*", "!**/node_modules/**"],
 		"coverageDirectory": "__tests__/coverage",
 		"transform": {
 			"^.+\\.js$": "babel-jest",
