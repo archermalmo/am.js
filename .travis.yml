@@ -11,7 +11,6 @@ cache:
   yarn: true
 scripts:
   - yarn global add codecov
-  - yarn test
-  - bash <(curl -s https://codecov.io/bash) -cF javascript
 after_success:
+  - bash <(curl -s https://codecov.io/bash) -cF __tests__/coverage/
   - codecov
