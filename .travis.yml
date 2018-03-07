@@ -11,5 +11,5 @@ cache:
   yarn: true
 after_success:
   - yarn add -D codecov
-  - ./node_modules/.bin/codecov -f __tests__/coverage/ -t 238b61f8-9ab1-4850-bed4-4234f0cd9c55
+  - ./node_modules/.bin/codecov -f "__tests__/coverage/**" -t 238b61f8-9ab1-4850-bed4-4234f0cd9c55
   #- bash <(curl -s https://codecov.io/bash) -f __tests__/coverage/ -t 238b61f8-9ab1-4850-bed4-4234f0cd9c55
