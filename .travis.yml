@@ -9,3 +9,6 @@ cache:
   directories:
     - "node_modules"
   yarn: true
+after_success:
+  - yarn add -D codecov
+  - ./node_modules/.bin/codecov -t 238b61f8-9ab1-4850-bed4-4234f0cd9c55

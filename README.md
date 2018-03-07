@@ -16,6 +16,11 @@
 
 This project is an internal Javascript library of useful utility classes and functions that can be shared and maintained across Archer Malmo's Digital department.
 
+#### Links:
+
+- **[Docs](https://archermalmo.github.io/am.js/docs)**
+- **[Coverage](https://archermalmo.github.io/am.js/coverage)**
+
 ## Installation
 
 You can install using `yarn`:
