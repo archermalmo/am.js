@@ -43,7 +43,7 @@ You can use `am.js` without installing via npm/yarn as well; include a script ta
 
 This will pull in the production version of the [IIFE build](#iife).
 
-Lastly, you can grab a ZIP or TAR download of the [latest release on Github](/releases/latest).
+Lastly, you can grab a ZIP or TAR download of the [latest release on Github](https://github.com/archermalmo/am.js/releases/latest).
 
 ## Usage
 
