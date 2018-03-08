@@ -1,7 +1,15 @@
+# am.js
+
+This project is an internal Javascript library of useful utility classes and functions that can be shared and maintained across Archer Malmo's Digital department.
+
 <p align="center">
-	<img alt="npm version" src="https://img.shields.io/npm/v/@archermalmo/am.js.svg?style=flat">
-	<img alt="npm downloads" src="https://img.shields.io/npm/dt/@archermalmo/am.js.svg?style=flat">
-	<a href="https://github.com/archermalmo/am.js/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">
+	<a href="https://www.npmjs.com/package/@archermalmo/am.js" target="_blank" rel="noopener noreferrer">
+		<img alt="npm version" 		src="https://img.shields.io/npm/v/@archermalmo/am.js.svg?style=flat">
+	</a>
+	<a href="https://www.npmjs.com/package/@archermalmo/am.js" target="_blank" rel="noopener noreferrer">
+		<img alt="npm downloads" 		src="https://img.shields.io/npm/dt/@archermalmo/am.js.svg?style=flat">
+	</a>
+	<a href="https://github.com/archermalmo/am.js/blob/master/LICENSE" target="_blank" rel="noopener noreferrer"~>
 		<img alt="license" src="https://img.shields.io/npm/l/@archermalmo/am.js.svg?style=flat">
 	</a>
 	<a href="https://travis-ci.org/archermalmo/am.js" target="_blank" rel="noopener noreferrer">
@@ -17,10 +25,6 @@
 		<img alt="release date" src="https://img.shields.io/github/release-date/archermalmo/am.js.svg?style=flat">
 	</a>
 </p>
-
-# am.js
-
-This project is an internal Javascript library of useful utility classes and functions that can be shared and maintained across Archer Malmo's Digital department.
 
 #### Links:
 
