@@ -1,15 +1,21 @@
 <p align="center">
 	<img alt="npm version" src="https://img.shields.io/npm/v/@archermalmo/am.js.svg?style=flat">
 	<img alt="npm downloads" src="https://img.shields.io/npm/dt/@archermalmo/am.js.svg?style=flat">
-	<img alt="license" src="https://img.shields.io/npm/l/@archermalmo/am.js.svg?style=flat">
+	<a href="https://github.com/archermalmo/am.js/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">
+		<img alt="license" src="https://img.shields.io/npm/l/@archermalmo/am.js.svg?style=flat">
+	</a>
 	<a href="https://travis-ci.org/archermalmo/am.js" target="_blank" rel="noopener noreferrer">
 	  <img alt="travis-ci status" src="https://img.shields.io/travis/archermalmo/am.js.svg?style=flat">
 	</a>
 	<a href="https://codecov.io/gh/archermalmo/am.js" target="_blank" rel="noopener noreferrer">
 	  <img src="https://img.shields.io/codecov/c/github/archermalmo/am.js/master.svg?style=flat" />
 	</a>
-	<img alt="docs site status" src="https://img.shields.io/website-up-down-green-red/http/archermalmo.github.io/am.js.svg?style=flat&label=Docs%20Site">
-	<img alt="release date" src="https://img.shields.io/github/release-date/archermalmo/am.js.svg?style=flat">
+	<a href="https://archermalmo.github.io/am.js/docs" target="_blank" rel="noopener noreferrer">
+		<img alt="docs site status" src="https://img.shields.io/website-up-down-green-red/http/archermalmo.github.io/am.js/docs.svg?style=flat&label=Docs%20Site">
+	</a>
+	<a href="https://github.com/archermalmo/am.js/releases/latest" target="_blank" rel="noopener noreferrer">
+		<img alt="release date" src="https://img.shields.io/github/release-date/archermalmo/am.js.svg?style=flat">
+	</a>
 </p>
 
 # am.js
