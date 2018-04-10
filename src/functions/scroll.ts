@@ -6,28 +6,44 @@
  * @function isElementInViewport
  * @description Determines if a given element is partially or
  * fully visible in the viewport.
- * @param {Element} element HTML Element node to target.
- * @param {number} threshold Ratio of the viewport height the element
+ * @param {object} config
+ * @param {Element} config.element HTML Element node to target.
+ * @param {number} [config.threshold] Ratio of the viewport height the element
  * must fill before being considered visible. E.g. 0.5 means the element
  * must take up 50% of the screen before returning true. Defaults to 0.25.
  * Only used for elements taller than the viewport.
  * @return {boolean} Boolean describing if input is fully/partially
  * in the viewport, relative to the threshold setting.
  */
-function isElementInViewport(element: Element, threshold: number): boolean {
-  const rect: ClientRect | DOMRect = element.getBoundingClientRect();
+function isElementInViewport({
+  element: argElement,
+  threshold: argThreshold
+}: {
+  element: Element;
+  threshold: number;
+}): boolean {
+  const defaultParams: {
+    threshold: number;
+  } = {
+    threshold: 0.25
+  };
+
+  const safeArgs = {
+    threshold: argThreshold || defaultParams.threshold
+  };
+
+  const rect: ClientRect | DOMRect = argElement.getBoundingClientRect();
+
   const viewportHeight: number = Math.max(
     document.documentElement.clientHeight,
     window.innerHeight || 0
   );
-  if (threshold === undefined) {
-    threshold = 0.25;
-  } else {
-    if (threshold < 0 || threshold > 1) {
-      throw new RangeError(
-        "Threshold argument must be a decimal between 0 and 1"
-      );
-    }
+  const { threshold } = safeArgs;
+
+  if (threshold < 0 || threshold > 1) {
+    throw new RangeError(
+      "Threshold argument must be a decimal between 0 and 1"
+    );
   }
 
   //If the element is too tall to fit within the viewport
