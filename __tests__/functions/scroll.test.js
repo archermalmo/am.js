@@ -23,22 +23,41 @@ describe("isElementInViewport tests", () => {
 		expect(mockedFn).toBeDefined();
 	});
 
-	it("calculates that the element is inside the viewport", () => {
+	it("missing optional argument does not throw error", () => {
 		const mockedResult = mockedFn({
-			element,
-			elementDivisorSize: 1
+			element
 		});
 		expect(mockedFn).toBeCalled();
-		expect(mockedResult).toBe(true);
+		expect(typeof mockedResult).toBe('boolean');
 	});
 
-	it("calculates that the element is not inside the viewport", () => {
+	it("valid arguments do not throw error", () => {
 		const mockedResult = mockedFn({
 			element,
-			elementDivisorSize: 0
+			threshold: 0.5
 		});
 		expect(mockedFn).toBeCalled();
-		// ? -> expect(mockedResult).toBe(false);
+		expect(typeof mockedResult).toBe('boolean');
+	});
+
+	it("negative threshold throws RangeError", () => {
+		function callFunction() {
+			mockedFn({
+				element,
+				threshold: -1
+			});
+		}
+		expect(callFunction).toThrow(RangeError);
+	});
+
+	it("threshold > 1 throws RangeError", () => {
+		function callFunction() {
+			mockedFn({
+				element,
+				threshold: 2
+			});
+		}
+		expect(callFunction).toThrow(RangeError);
 	});
 });
 
