@@ -1,6 +1,6 @@
 const jest = require("jest");
 const mock = require("jest-mock");
-const { isElementInViewport, scrollTo } = require("../../src/functions/scroll");
+const { isElementInViewport, scrollTo } = require("../../src/");
 
 const mockHTML = `<section>
 <article>

@@ -3,6 +3,6 @@
 module.exports = {
 	plugins: [],
 	opts: {
-		destination: "./docs"
+		destination: "./docs/docs"
 	}
 };

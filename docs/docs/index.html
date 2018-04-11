@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><p align="center">
+    <img alt="npm version" src="https://img.shields.io/npm/v/@archermalmo/am.js.svg?style=flat">
+    <img alt="npm downloads" src="https://img.shields.io/npm/dt/@archermalmo/am.js.svg?style=flat">
+    <img alt="license" src="https://img.shields.io/npm/l/@archermalmo/am.js.svg?style=flat">
+    <a href="https://travis-ci.org/archermalmo/am.js" target="_blank" rel="noopener noreferrer">
+      <img alt="travis-ci status" src="https://img.shields.io/travis/archermalmo/am.js.svg?style=flat">
+    </a>
+    <a href="https://codecov.io/gh/archermalmo/am.js" target="_blank" rel="noopener noreferrer">
+      <img src="https://img.shields.io/codecov/c/github/archermalmo/am.js/master.svg?style=flat" />
+    </a>
+    <img alt="docs site status" src="https://img.shields.io/website-up-down-green-red/http/archermalmo.github.io/am.js.svg?style=flat&label=Docs%20Site">
+    <img alt="release date" src="https://img.shields.io/github/release-date/archermalmo/am.js.svg?style=flat">
+</p>
+
+<h1>am.js</h1><p>This project is an internal Javascript library of useful utility classes and functions that can be shared and maintained across Archer Malmo's Digital department.</p>
+<h4>Links:</h4><ul>
+<li><strong><a href="https://archermalmo.github.io/am.js/docs">Docs</a></strong></li>
+<li><strong><a href="https://archermalmo.github.io/am.js/coverage">Coverage</a></strong></li>
+</ul>
+<h2>Installation</h2><p>You can install using <code>yarn</code>:</p>
+<pre class="prettyprint source lang-terminal"><code>$ yarn add -D @archermalmo/am.js</code></pre><p>or <code>npm</code>:</p>
+<pre class="prettyprint source lang-terminal"><code>$ npm i --save-dev @archermalmo/am.js</code></pre><p>You can use <code>am.js</code> without installing via npm/yarn as well; include a script tag in the <code>head</code> of your document that points to the <a href="https://unpkg.com/">Unpkg</a> distribution:</p>
+<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://unpkg.com/@archermalmo/am.js&quot;>&lt;/script></code></pre><p>This will pull in the production version of the <a href="#iife">IIFE build</a>.</p>
+<p>Lastly, you can grab a ZIP or TAR download of the <a href="https://github.com/archermalmo/am.js/releases/latest">latest release on Github</a>.</p>
+<h2>Usage</h2><p>Many utilities in am.js are able to be used cross-environment. To support browsers, module systems, and node.js, this library is built into three different distributions: </p>
+<ul>
+<li><a href="#iife">IIFE</a></li>
+<li><a href="#commonjs-modules">CommonJS module</a></li>
+<li><a href="#es2015-modules">ES2015 module</a></li>
+</ul>
+<p>All build targets also have <a href="#environment-specific-builds">development builds</a> for ease-of-use during initial development.</p>
+<h3>IIFE</h3><p>Add the following <code>script</code> tag to your HTML:</p>
+<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;/path/to/am.js&quot;>&lt;/script></code></pre><p>Now, am.js utilities are available to be used under the global object <code>AM</code>.</p>
+<pre class="prettyprint source lang-javascript"><code>const siteNavElement = AM.select(&quot;nav#site&quot;);
+// -> &lt;nav id=&quot;site&quot;>…&lt;/nav>
+
+const titleCaseMessage = AM.capitalize(&quot;hello world&quot;);
+// -> 'Hello World'
+
+const dataRequest = new AM.Request({ endpoint: &quot;https://example.com/&quot; });
+dataRequest.send().then(res => res.json()).then(console.log);
+// -> { some: 'data' }</code></pre><h3>CommonJS Modules</h3><p>Use the <code>require()</code> function to target the CommonJS build in a file intended to be used in a node.js program or CommonJS module system.</p>
+<pre class="prettyprint source lang-javascript"><code>const { trim, capitalize } = require(&quot;am.cjs&quot;);
+
+capitalize(trim(&quot;  hello world     &quot;));
+// -> &quot;Hello World&quot;</code></pre><h3>ES2015 Modules</h3><p>Use the <code>import ... from &quot;...&quot;</code> syntax to target the ECMAScript Module build in a file intended to be used in an ES6+ environment or module system (e.g. a Webpack bundle).</p>
+<pre class="prettyprint source lang-javascript"><code>import { selectById, slugify, Request } from &quot;am.esm&quot;
+
+const titleText = selectById(&quot;title&quot;).innerText;
+// -> &quot;Hello World&quot;
+
+const sluggedTitle = slugify(titleText);
+// -> &quot;hello-world&quot;
+
+const postTitle = new Request({ endpoint: &quot;https://api.example.com/&quot;, options: { method: &quot;POST&quot; }, body: JSON.stringify(sluggedTitle) });
+
+const postResponse = postTitle.send();
+
+postResponse.then(console.log);
+// -> { status: 200, ok: true, …}</code></pre><h3>Environment-Specific Builds</h3><p>All environment targets have development builds, denoted by a <code>.dev</code> before the Javascript file extension:</p>
+<ul>
+<li>IIFE: <code>am.dev.js</code></li>
+<li>CommonJS: <code>am.cjs.dev.js</code></li>
+<li>ES2015: <code>am.esm.dev.js</code></li>
+</ul>
+<p>These builds are non-uglified, with sourcemaps and documenting comments in place; they should only be used in development environments/stages, and switched to non-development builds before deploying to production.</p>
+<p>Non-development builds are uglified and minified to provide the most performant bundle possible. </p>
+<p>In order to get the most out of the library and include the least amount of code, it is recommended to use a build tool such as Webpack alongside the <code>.esm</code> or <code>.cjs</code> module distributions.</p>
+<h2>Contributing</h2><h3>Adding functions or classes by PR</h3><p>If you have a class or function that you think should be added, complete the following steps:</p>
+<ol>
+<li>Fork this repository.</li>
+<li>Create a <a href="https://www.google.com/search?q=What+is+a+feature+branch+in+git">feature branch</a> in git using a name that describes the feature/bug/addition you are updating/fixing/adding.</li>
+<li>Add your class or function to the related module under the respective directory in <code>src</code>; for example, a function that logs the how much of a page has been scrolled would go under <code>src/functions/scroll.ts</code>.</li>
+<li>If possible, please add some light documentation of the class/function's parameters and variable types using the <a href="http://usejsdoc.org/">JSDoc</a> specification. (see an <a href="https://github.com/archermalmo/am.js/blob/ffe72906a865fc71651258619ca9ce2557aff98e/src/functions/parse.ts#L1-L7">example here</a>)</li>
+<li>Open a pull request on this package to your feature branch.</li>
+</ol>
+<h3>Running the project</h3><p>To get started developing this library, follow these steps to get started:</p>
+<ol>
+<li>Run <code>npm i</code> or <code>yarn</code> to install dependencies</li>
+<li>Run <code>[npm|yarn] start</code> to start the Rollup (JS bundler) in development mode; note, it is recommended to also run the <code>test:watch</code> script alongside the development process, to catch preliminary bugs in the test suite(s) (see #5).</li>
+<li>All modules are written in <a href="https://www.typescriptlang.org/">Typescript</a>, and are located in <code>src</code>; functions are included in modules by category, and classes are their own modules</li>
+<li>Tests should be written against each added function/class; all tests are located in the <code>__tests__</code> directory.</li>
+<li>Run <code>[npm|yarn] test</code> to run a one-off test run; running <code>[npm|yarn] run test:watch</code> will start a watch process for tests</li>
+<li>Once additions have been properly tested, run <code>[npm|yarn] run build</code> to build the module bundles into <code>dist</code></li>
+</ol>
+<h3>Testing</h3><p>Testing for <code>am.js</code> is taken care of in two different ways: <strong>unit tests</strong> and <strong>continuous integration</strong>.</p>
+<h4>Unit Tests</h4><p>The library unit tests, located in <code>__tests__</code> are written in <a href="https://facebook.github.io/jest/">Jest</a>, an open-source Javascript unit testing framework from Facebook. It is quite versatile, allowing tests to be run against simple value comparisons, or more complex tests involving mocking DOM nodes.</p>
+<p>As noted above, you can run these test suites two different ways:</p>
+<ol>
+<li><code>yarn run test</code>: runs through each test suite, and outputs a report based on how many tests and suites passed or failed.</li>
+<li><code>yarn run test:watch</code>: starts a watch process that runs through tests as they or their dependencies are changed. Following the command line interface's prompts, you can configure the process to only watch certain tests, e.g. ones that follow a regex pattern, only tests that have changed since the last run, etc.</li>
+</ol>
+<h4>Continuous Integration</h4><p>This library is also tested after a <code>push</code> event is triggered on the Github repo, including any branch push or pull request openings. These tests are handled in a continuous integration, or CI, environment; this repo's code is tested using <a href="https://travis-ci.com/">TravisCI</a>.</p>
+<p>While local unit tests ensure during development that code is properly tested and error-free, they are ran at the discresion of a developer; CI tests are automatically ran against the same tests when code changes occur or new branch code is available.</p>
+<h3>Notes</h3><p>Below is a list of repo-related notes/gotchas that are useful to know when working on this project or interacting with this repo:</p>
+<ul>
+<li>TravisCI build is disabled for the <code>docs</code> branch; no library changes should be made on this branch. Still, adding <code>[skip ci]</code> at the beginning of the commit message is useful for preventing these commits from triggering a build when merged into <code>master</code> branch.</li>
+</ul></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-parse.html">parse</a></li><li><a href="module-scroll.html">scroll</a></li><li><a href="module-select.html">select</a></li><li><a href="module-typography.html">typography</a></li></ul><h3>Classes</h3><ul><li><a href="Request.html">Request</a></li></ul><h3>Global</h3><ul><li><a href="global.html#fetchPonyfill">fetchPonyfill</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Mar 07 2018 11:17:46 GMT-0600 (CST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

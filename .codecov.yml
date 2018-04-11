@@ -1,0 +1,16 @@
+coverage:
+  round: down
+  precision: 3
+flags:
+  source: 
+    paths:
+      - src/
+  tests:
+    paths:
+      - __tests__
+  distribution:
+    paths:
+      - dist/
+comment:
+  layout: "reach, diff, flags, files"
+  behavior: new
