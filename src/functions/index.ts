@@ -1,3 +1,4 @@
+import { searchPropPath } from "./dataManipulation";
 import { parseExternalMarkdownLinks, parseURLParams } from "./parse";
 import { isElementInViewport, scrollTo } from "./scroll";
 import { select, selectAll, selectById } from "./select";
@@ -9,6 +10,7 @@ export {
   parseExternalMarkdownLinks,
   parseURLParams,
   scrollTo,
+  searchPropPath,
   select,
   selectAll,
   selectById,
