@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Module: parse</title>
+    <title>JSDoc: Module: dataManipulation</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Module: parse</h1>
+    <h1 class="page-title">Module: dataManipulation</h1>
 
     
 
@@ -64,7 +64,7 @@
     
 
     
-    <h4 class="name" id="~params"><span class="type-signature">(inner) </span>params<span class="signature">(url<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="~searchPropPath"><span class="type-signature">(inner) </span>searchPropPath<span class="signature">(path<span class="signature-attributes">opt</span>, collection<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {any}</span></h4>
     
 
     
@@ -72,7 +72,7 @@
 
 
 <div class="description">
-    Creates object of key/value pairs from URL parameters.
+    Recursively searchs through a data object
 </div>
 
 
@@ -110,13 +110,13 @@
 
         <tr>
             
-                <td class="name"><code>url</code></td>
+                <td class="name"><code>path</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">Array.&lt;alphanumeric></span>
 
 
             
@@ -136,164 +136,40 @@
 
             
 
-            <td class="description last">URL to parse; defaults to window.location.search.</td>
+            <td class="description last">Array of keys in the order of which will be used to recursively search an object</td>
         </tr>
 
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="am.esm.js.html">am.esm.js</a>, <a href="am.esm.js.html#line524">line 524</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Object of key/value pairs.
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">object</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="~parseExternalMarkdownLinks"><span class="type-signature">(inner) </span>parseExternalMarkdownLinks<span class="signature">(string)</span><span class="type-signature"> &rarr; {string}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Transforms Markdown links to use target="_blank", rel="noopener noreferrer";usually used when implementing clientside Markdown, before sending the Markdown to the mainparsing function.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
     
 
         <tr>
             
-                <td class="name"><code>string</code></td>
+                <td class="name"><code>collection</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">object</span>
 
 
             
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">String to parse as Markdown link.</td>
+            <td class="description last">Data object</td>
         </tr>
 
     
@@ -334,7 +210,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="am.esm.js.html">am.esm.js</a>, <a href="am.esm.js.html#line544">line 544</a>
+        <a href="am.esm.js.html">am.esm.js</a>, <a href="am.esm.js.html#line504">line 504</a>
     </li></ul></dd>
     
 
@@ -361,7 +237,7 @@
 
         
 <div class="param-desc">
-    HTML link with URL and innerText, target and rel attributes properly set foran external link.
+    Value at the end of the searched property path;
 </div>
 
 
@@ -372,7 +248,7 @@
     </dt>
     <dd>
         
-<span class="param-type">string</span>
+<span class="param-type">any</span>
 
 
     </dd>
