@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for functions/select.ts</title>
+    <title>Code coverage report for functions/dataManipulation.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,32 +16,32 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">functions</a> select.ts
+      <a href="../index.html">All files</a> / <a href="index.html">functions</a> dataManipulation.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">42.86% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>10/10</span>
+        <span class='fraction'>3/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>0/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>0/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">42.86% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>7/7</span>
+        <span class='fraction'>3/7</span>
       </div>
     </div>
   </div>
-  <div class='status-line high'></div>
+  <div class='status-line low'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -64,19 +64,7 @@
 19
 20
 21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+22</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -87,62 +75,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * @module select
+ * @module dataManipulation
  */
+&nbsp;
+type alphanumeric = string | number;
 &nbsp;
 /**
- * @function select
- * @description Selects a DOM node based on a query.
- * @param {string} query query selector to use to query an node.
- * @returns {Element} First DOM node that matches the query.
- */
-const select: Function = (query: string): Element =&gt;
-  document.querySelector(query);
+ * @function searchPropPath
+ * @description Recursively searchs through a data object
+ * @param {alphanumeric[]} [path] Array of keys in the order of which will be used to recursively search an object
+ * @param {object} [collection] Data object
+ * @return {any} Value at the end of the searched property path; 
+ */<span class="fstat-no" title="function not covered" ></span>
+const searchPropPath <span class="cstat-no" title="statement not covered" >= (path: al</span>phanumeric[], collection: object): any =&gt; {
+  le<span class="cstat-no" title="statement not covered" >t pathResult <span class="fstat-no" title="function not covered" >= </span>collection;</span>
+  path.f<span class="cstat-no" title="statement not covered" >orEach(key =&gt; {</span>
+    pathResult = pathResult[key];
+  })<span class="cstat-no" title="statement not covered" >;</span>
+  return pathResult ? pathResult : false;
+};
 &nbsp;
-/**
- * @function selectAll
- * @description Selects a DOM nodelist based on a query.
- * @param {string} query query selector to use to query a nodelist.
- * @returns {Element[]} Array of DOM nodes that match the query.
- */
-const selectAll: Function = (query: string): Element[] =&gt; [
-  ...document.querySelectorAll(query)
-];
-&nbsp;
-/**
- * @function selectById
- * @description Selects a DOM node based on an ID string.
- * @param {string} id ID of DOM node to select.
- * @returns {Element} DOM node with matched ID.
- */
-const selectById: Function = (id: string): Element =&gt;
-  document.getElementById(id);
-&nbsp;
-export { select, selectAll, selectById };
-&nbsp;</pre></td></tr>
+export { searchPropPath }</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
