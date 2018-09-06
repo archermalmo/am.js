@@ -1,1 +1,713 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var fetchPonyfill=function(t){var e=e||!1,r=void 0===r?e||i:r,o=t&&t.Promise||r.Promise,n=t&&t.XMLHttpRequest||r.XMLHttpRequest,i=r;return function(){var t=Object.create(i,{fetch:{value:void 0,writable:!0}});return function(t){if(!t.fetch){var e={searchParams:"URLSearchParams"in t,iterable:"Symbol"in t&&"iterator"in Symbol,blob:"FileReader"in t&&"Blob"in t&&function(){try{return new Blob,!0}catch(t){return!1}}(),formData:"FormData"in t,arrayBuffer:"ArrayBuffer"in t};if(e.arrayBuffer)var r=["[object Int8Array]","[object Uint8Array]","[object Uint8ClampedArray]","[object Int16Array]","[object Uint16Array]","[object Int32Array]","[object Uint32Array]","[object Float32Array]","[object Float64Array]"],i=function(t){return t&&DataView.prototype.isPrototypeOf(t)},s=ArrayBuffer.isView||function(t){return t&&r.indexOf(Object.prototype.toString.call(t))>-1};p.prototype.append=function(t,e){t=l(t),e=c(e);var r=this.map[t];this.map[t]=r?r+","+e:e},p.prototype.delete=function(t){delete this.map[l(t)]},p.prototype.get=function(t){return t=l(t),this.has(t)?this.map[t]:null},p.prototype.has=function(t){return this.map.hasOwnProperty(l(t))},p.prototype.set=function(t,e){this.map[l(t)]=c(e)},p.prototype.forEach=function(t,e){for(var r in this.map)this.map.hasOwnProperty(r)&&t.call(e,this.map[r],r,this)},p.prototype.keys=function(){var t=[];return this.forEach(function(e,r){t.push(r)}),h(t)},p.prototype.values=function(){var t=[];return this.forEach(function(e){t.push(e)}),h(t)},p.prototype.entries=function(){var t=[];return this.forEach(function(e,r){t.push([r,e])}),h(t)},e.iterable&&(p.prototype[Symbol.iterator]=p.prototype.entries);var a=["DELETE","GET","HEAD","OPTIONS","POST","PUT"];v.prototype.clone=function(){return new v(this,{body:this._bodyInit})},w.call(v.prototype);var u=function(t,e){e||(e={}),this.type="default",this.status="status"in e?e.status:200,this.ok=this.status>=200&&this.status<300,this.statusText="statusText"in e?e.statusText:"OK",this.headers=new p(e.headers),this.url=e.url||"",this._initBody(t)};w.call(u.prototype),u.prototype.clone=function(){return new u(this._bodyInit,{status:this.status,statusText:this.statusText,headers:new p(this.headers),url:this.url})},u.error=function(){var t=new u(null,{status:0,statusText:""});return t.type="error",t};var f=[301,302,303,307,308];u.redirect=function(t,e){if(-1===f.indexOf(e))throw new RangeError("Invalid status code");return new u(null,{status:e,headers:{location:t}})},t.Headers=p,t.Request=v,t.Response=u,t.fetch=function(t,r){return new o(function(o,i){var s=new v(t,r),a=new n;a.onload=function(){var t,e,r={status:a.status,statusText:a.statusText,headers:(t=a.getAllResponseHeaders()||"",e=new p({}),t.split(/\r?\n/).forEach(function(t){var r=t.split(":"),o=r.shift().trim();if(o){var n=r.join(":").trim();e.append(o,n)}}),e)};r.url="responseURL"in a?a.responseURL:r.headers.get("X-Request-URL");var n="response"in a?a.response:a.responseText;o(new u(n,r))},a.onerror=function(){i(new TypeError("Network request failed"))},a.ontimeout=function(){i(new TypeError("Network request failed"))},a.open(s.method,s.url,!0),"include"===s.credentials&&(a.withCredentials=!0),"responseType"in a&&e.blob&&(a.responseType="blob"),s.headers.forEach(function(t,e){a.setRequestHeader(e,t)}),a.send(void 0===s._bodyInit?null:s._bodyInit)})},t.fetch.polyfill=!0}function l(t){if("string"!=typeof t&&(t=String(t)),/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(t))throw new TypeError("Invalid character in header field name");return t.toLowerCase()}function c(t){return"string"!=typeof t&&(t=String(t)),t}function h(t){var r={next:function(){var e=t.shift();return{done:void 0===e,value:e}}};return e.iterable&&(r[Symbol.iterator]=function(){return r}),r}function p(t){this.map={},t instanceof p?t.forEach(function(t,e){this.append(e,t)},this):Array.isArray(t)?t.forEach(function(t){this.append(t[0],t[1])},this):t&&Object.getOwnPropertyNames(t).forEach(function(e){this.append(e,t[e])},this)}function d(t){if(t.bodyUsed)return o.reject(new TypeError("Already read"));t.bodyUsed=!0}function y(t){return new o(function(e,r){t.onload=function(){e(t.result)},t.onerror=function(){r(t.error)}})}function b(t){var e=new FileReader,r=y(e);return e.readAsArrayBuffer(t),r}function m(t){if(t.slice)return t.slice(0);var e=new Uint8Array(t.byteLength);return e.set(new Uint8Array(t)),e.buffer}function w(){return this.bodyUsed=!1,this._initBody=function(t){if(this._bodyInit=t,t)if("string"==typeof t)this._bodyText=t;else if(e.blob&&Blob.prototype.isPrototypeOf(t))this._bodyBlob=t;else if(e.formData&&FormData.prototype.isPrototypeOf(t))this._bodyFormData=t;else if(e.searchParams&&URLSearchParams.prototype.isPrototypeOf(t))this._bodyText=t.toString();else if(e.arrayBuffer&&e.blob&&i(t))this._bodyArrayBuffer=m(t.buffer),this._bodyInit=new Blob([this._bodyArrayBuffer]);else{if(!e.arrayBuffer||!ArrayBuffer.prototype.isPrototypeOf(t)&&!s(t))throw new Error("unsupported BodyInit type");this._bodyArrayBuffer=m(t)}else this._bodyText="";this.headers.get("content-type")||("string"==typeof t?this.headers.set("content-type","text/plain;charset=UTF-8"):this._bodyBlob&&this._bodyBlob.type?this.headers.set("content-type",this._bodyBlob.type):e.searchParams&&URLSearchParams.prototype.isPrototypeOf(t)&&this.headers.set("content-type","application/x-www-form-urlencoded;charset=UTF-8"))},e.blob&&(this.blob=function(){var t=d(this);if(t)return t;if(this._bodyBlob)return o.resolve(this._bodyBlob);if(this._bodyArrayBuffer)return o.resolve(new Blob([this._bodyArrayBuffer]));if(this._bodyFormData)throw new Error("could not read FormData body as blob");return o.resolve(new Blob([this._bodyText]))},this.arrayBuffer=function(){return this._bodyArrayBuffer?d(this)||o.resolve(this._bodyArrayBuffer):this.blob().then(b)}),this.text=function(){var t,e,r,n=d(this);if(n)return n;if(this._bodyBlob)return t=this._bodyBlob,e=new FileReader,r=y(e),e.readAsText(t),r;if(this._bodyArrayBuffer)return o.resolve(function(t){for(var e=new Uint8Array(t),r=new Array(e.length),o=0;o<e.length;o++)r[o]=String.fromCharCode(e[o]);return r.join("")}(this._bodyArrayBuffer));if(this._bodyFormData)throw new Error("could not read FormData body as text");return o.resolve(this._bodyText)},e.formData&&(this.formData=function(){return this.text().then(A)}),this.json=function(){return this.text().then(JSON.parse)},this}function v(t,e){var r,o,n=(e=e||{}).body;if(t instanceof v){if(t.bodyUsed)throw new TypeError("Already read");this.url=t.url,this.credentials=t.credentials,e.headers||(this.headers=new p(t.headers)),this.method=t.method,this.mode=t.mode,n||null==t._bodyInit||(n=t._bodyInit,t.bodyUsed=!0)}else this.url=String(t);if(this.credentials=e.credentials||this.credentials||"omit",!e.headers&&this.headers||(this.headers=new p(e.headers)),this.method=(r=e.method||this.method||"GET",o=r.toUpperCase(),a.indexOf(o)>-1?o:r),this.mode=e.mode||this.mode||null,this.referrer=null,("GET"===this.method||"HEAD"===this.method)&&n)throw new TypeError("Body not allowed for GET or HEAD requests");this._initBody(n)}function A(t){var e=new FormData;return t.trim().split("&").forEach(function(t){if(t){var r=t.split("="),o=r.shift().replace(/\+/g," "),n=r.join("=").replace(/\+/g," ");e.append(decodeURIComponent(o),decodeURIComponent(n))}}),e}}(void 0!==t?t:this),{fetch:t.fetch,Headers:t.Headers,Request:t.Request,Response:t.Response}}()},_extends=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var r=arguments[e];for(var o in r)Object.prototype.hasOwnProperty.call(r,o)&&(t[o]=r[o])}return t};function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}var Request=function t(e){var r=this,o=e.endpoint,n=e.options,i=e.body;_classCallCheck(this,t),this.prepareFetchOptions=function(){return r.body||"POST"!==r.options.method||(r.body=new FormData),r.body},this.send=function(){var t=(arguments.length>0&&void 0!==arguments[0]?arguments[0]:{async:!1}).async,e=(window?window.fetch?window:fetchPonyfill({}).fetch:{fetch:function(){console.warn("fetch is not supported")}}).fetch,o=_extends({},r.prepareFetchOptions(),r.options),n=e(r.endpoint,o);return t?n.then(function(t){return t.json()}):n},this.endpoint=o,this.options=n||t.defaultOptions,this.body=i};Request.defaultOptions={method:"GET",headers:{Accept:"application/json"}};var _slicedToArray=function(){return function(t,e){if(Array.isArray(t))return t;if(Symbol.iterator in Object(t))return function(t,e){var r=[],o=!0,n=!1,i=void 0;try{for(var s,a=t[Symbol.iterator]();!(o=(s=a.next()).done)&&(r.push(s.value),!e||r.length!==e);o=!0);}catch(t){n=!0,i=t}finally{try{!o&&a.return&&a.return()}finally{if(n)throw i}}return r}(t,e);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),params=function(){return(arguments.length>0&&void 0!==arguments[0]?arguments[0]:window.location.search).split("?")[1].split("&").map(function(t){return t.split("=")}).reduce(function(t,e,r,o){var n=_slicedToArray(e,2),i=n[0],s=n[1];return t[i]=decodeURIComponent(s).replace(/\+/g," "),t},{})},parseExternalMarkdownLinks=function(t){var e=/\[([^\]]+)\]\(([^)]+)\)/g;return t.search(e)>-1?t.replace(e,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'):t},_extends$1=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var r=arguments[e];for(var o in r)Object.prototype.hasOwnProperty.call(r,o)&&(t[o]=r[o])}return t};function isElementInViewport(t){var e=t.element,r=t.elementDivisorSize,o=t.useBottomOffset,n={elementDivisorSize:1,useBottomOffset:!1},i=_extends$1({},n,{elementDivisorSize:Math.ceil(Math.abs(r||n.elementDivisorSize)),useBottomOffset:o||n.useBottomOffset}),s=i.elementDivisorSize,a=i.useBottomOffset,u=e.getBoundingClientRect(),f=u.top,l=u.bottom,c=u.height,h=(window.innerHeight||document.documentElement.clientHeight)-c/s;return l>=(a?c/s:0)&&f<=h}function scrollTo(t,e,r){if(!(r<=0)){var o=(e-t.scrollTop)/r*10;setTimeout(function(){t.scrollTop=t.scrollTop+o,t.scrollTop!==e&&scrollTo(t,e,r-10)},10)}}function _toConsumableArray(t){if(Array.isArray(t)){for(var e=0,r=Array(t.length);e<t.length;e++)r[e]=t[e];return r}return Array.from(t)}var select=function(t){return document.querySelector(t)},selectAll=function(t){return[].concat(_toConsumableArray(document.querySelectorAll(t)))},selectById=function(t){return document.getElementById(t)};function _toArray(t){return Array.isArray(t)?t:Array.from(t)}var capitalize=function(t){return t.split(" ").map(function(t){return ucFirst(t)}).join(" ")},slugify=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"-";return t.replace(/(\!|#|\$|%|\*|\.|\/|\\|\(|\)|\+|\||\,|\:|\'|\")/g,"").replace(/(.)(\s|\_|\-)+(.)/g,"$1"+e+"$3").toLowerCase()},trim=function(t){return t.replace(/^\s+|\s+$/g,"")},ucFirst=function(t){var e=_toArray(t),r=e[0],o=e.slice(1);return""+r.toUpperCase()+o.join("")};exports.Request=Request,exports.capitalize=capitalize,exports.isElementInViewport=isElementInViewport,exports.parseExternalMarkdownLinks=parseExternalMarkdownLinks,exports.parseURLParams=params,exports.scrollTo=scrollTo,exports.select=select,exports.selectAll=selectAll,exports.selectById=selectById,exports.slugify=slugify,exports.trim=trim,exports.ucFirst=ucFirst;
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+/**
+ * Copied from node_modules/fetch-ponyfill/build/fetch-browser.js.
+ *
+ * Types added where necessary.
+ *
+ * Moved out of IIFE module type, placed `self` declaration to top
+ * of `fetchPonyfill` function scope.
+ */
+var fetchPonyfill = function fetchPonyfill(options) {
+    var window = window ? window : false;
+    var self = typeof self === "undefined" ? window ? window : global : self;
+    var Promise = options && options.Promise || self.Promise;
+    var XMLHttpRequest = options && options.XMLHttpRequest || self.XMLHttpRequest;
+    var global = self;
+    return function () {
+        var self = Object.create(global, {
+            fetch: {
+                value: undefined,
+                writable: true
+            }
+        });
+        (function (self) {
+            if (self.fetch) {
+                return;
+            }
+            var support = {
+                searchParams: "URLSearchParams" in self,
+                iterable: "Symbol" in self && "iterator" in Symbol,
+                blob: "FileReader" in self && "Blob" in self && function () {
+                    try {
+                        new Blob();
+                        return true;
+                    } catch (e) {
+                        return false;
+                    }
+                }(),
+                formData: "FormData" in self,
+                arrayBuffer: "ArrayBuffer" in self
+            };
+            if (support.arrayBuffer) {
+                var viewClasses = ["[object Int8Array]", "[object Uint8Array]", "[object Uint8ClampedArray]", "[object Int16Array]", "[object Uint16Array]", "[object Int32Array]", "[object Uint32Array]", "[object Float32Array]", "[object Float64Array]"];
+                var isDataView = function isDataView(obj) {
+                    return obj && DataView.prototype.isPrototypeOf(obj);
+                };
+                var isArrayBufferView = ArrayBuffer.isView || function (obj) {
+                    return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1;
+                };
+            }
+            function normalizeName(name) {
+                if (typeof name !== "string") {
+                    name = String(name);
+                }
+                if (/[^a-z0-9\-#$%&'*+.\^_`|~]/i.test(name)) {
+                    throw new TypeError("Invalid character in header field name");
+                }
+                return name.toLowerCase();
+            }
+            function normalizeValue(value) {
+                if (typeof value !== "string") {
+                    value = String(value);
+                }
+                return value;
+            }
+            // Build a destructive iterator for the value list
+            function iteratorFor(items) {
+                var iterator = {
+                    next: function next() {
+                        var value = items.shift();
+                        return { done: value === undefined, value: value };
+                    }
+                };
+                if (support.iterable) {
+                    iterator[Symbol.iterator] = function () {
+                        return iterator;
+                    };
+                }
+                return iterator;
+            }
+            function Headers(headers) {
+                this.map = {};
+                if (headers instanceof Headers) {
+                    headers.forEach(function (value, name) {
+                        this.append(name, value);
+                    }, this);
+                } else if (Array.isArray(headers)) {
+                    headers.forEach(function (header) {
+                        this.append(header[0], header[1]);
+                    }, this);
+                } else if (headers) {
+                    Object.getOwnPropertyNames(headers).forEach(function (name) {
+                        this.append(name, headers[name]);
+                    }, this);
+                }
+            }
+            Headers.prototype.append = function (name, value) {
+                name = normalizeName(name);
+                value = normalizeValue(value);
+                var oldValue = this.map[name];
+                this.map[name] = oldValue ? oldValue + "," + value : value;
+            };
+            Headers.prototype["delete"] = function (name) {
+                delete this.map[normalizeName(name)];
+            };
+            Headers.prototype.get = function (name) {
+                name = normalizeName(name);
+                return this.has(name) ? this.map[name] : null;
+            };
+            Headers.prototype.has = function (name) {
+                return this.map.hasOwnProperty(normalizeName(name));
+            };
+            Headers.prototype.set = function (name, value) {
+                this.map[normalizeName(name)] = normalizeValue(value);
+            };
+            Headers.prototype.forEach = function (callback, thisArg) {
+                for (var name in this.map) {
+                    if (this.map.hasOwnProperty(name)) {
+                        callback.call(thisArg, this.map[name], name, this);
+                    }
+                }
+            };
+            Headers.prototype.keys = function () {
+                var items = [];
+                this.forEach(function (value, name) {
+                    items.push(name);
+                });
+                return iteratorFor(items);
+            };
+            Headers.prototype.values = function () {
+                var items = [];
+                this.forEach(function (value) {
+                    items.push(value);
+                });
+                return iteratorFor(items);
+            };
+            Headers.prototype.entries = function () {
+                var items = [];
+                this.forEach(function (value, name) {
+                    items.push([name, value]);
+                });
+                return iteratorFor(items);
+            };
+            if (support.iterable) {
+                Headers.prototype[Symbol.iterator] = Headers.prototype.entries;
+            }
+            function consumed(body) {
+                if (body.bodyUsed) {
+                    return Promise.reject(new TypeError("Already read"));
+                }
+                body.bodyUsed = true;
+            }
+            function fileReaderReady(reader) {
+                return new Promise(function (resolve, reject) {
+                    reader.onload = function () {
+                        resolve(reader.result);
+                    };
+                    reader.onerror = function () {
+                        reject(reader.error);
+                    };
+                });
+            }
+            function readBlobAsArrayBuffer(blob) {
+                var reader = new FileReader();
+                var promise = fileReaderReady(reader);
+                reader.readAsArrayBuffer(blob);
+                return promise;
+            }
+            function readBlobAsText(blob) {
+                var reader = new FileReader();
+                var promise = fileReaderReady(reader);
+                reader.readAsText(blob);
+                return promise;
+            }
+            function readArrayBufferAsText(buf) {
+                var view = new Uint8Array(buf);
+                var chars = new Array(view.length);
+                for (var i = 0; i < view.length; i++) {
+                    chars[i] = String.fromCharCode(view[i]);
+                }
+                return chars.join("");
+            }
+            function bufferClone(buf) {
+                if (buf.slice) {
+                    return buf.slice(0);
+                } else {
+                    var view = new Uint8Array(buf.byteLength);
+                    view.set(new Uint8Array(buf));
+                    return view.buffer;
+                }
+            }
+            function Body() {
+                this.bodyUsed = false;
+                this._initBody = function (body) {
+                    this._bodyInit = body;
+                    if (!body) {
+                        this._bodyText = "";
+                    } else if (typeof body === "string") {
+                        this._bodyText = body;
+                    } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+                        this._bodyBlob = body;
+                    } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+                        this._bodyFormData = body;
+                    } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+                        this._bodyText = body.toString();
+                    } else if (support.arrayBuffer && support.blob && isDataView(body)) {
+                        this._bodyArrayBuffer = bufferClone(body.buffer);
+                        // IE 10-11 can't handle a DataView body.
+                        this._bodyInit = new Blob([this._bodyArrayBuffer]);
+                    } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
+                        this._bodyArrayBuffer = bufferClone(body);
+                    } else {
+                        throw new Error("unsupported BodyInit type");
+                    }
+                    if (!this.headers.get("content-type")) {
+                        if (typeof body === "string") {
+                            this.headers.set("content-type", "text/plain;charset=UTF-8");
+                        } else if (this._bodyBlob && this._bodyBlob.type) {
+                            this.headers.set("content-type", this._bodyBlob.type);
+                        } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+                            this.headers.set("content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+                        }
+                    }
+                };
+                if (support.blob) {
+                    this.blob = function () {
+                        var rejected = consumed(this);
+                        if (rejected) {
+                            return rejected;
+                        }
+                        if (this._bodyBlob) {
+                            return Promise.resolve(this._bodyBlob);
+                        } else if (this._bodyArrayBuffer) {
+                            return Promise.resolve(new Blob([this._bodyArrayBuffer]));
+                        } else if (this._bodyFormData) {
+                            throw new Error("could not read FormData body as blob");
+                        } else {
+                            return Promise.resolve(new Blob([this._bodyText]));
+                        }
+                    };
+                    this.arrayBuffer = function () {
+                        if (this._bodyArrayBuffer) {
+                            return consumed(this) || Promise.resolve(this._bodyArrayBuffer);
+                        } else {
+                            return this.blob().then(readBlobAsArrayBuffer);
+                        }
+                    };
+                }
+                this.text = function () {
+                    var rejected = consumed(this);
+                    if (rejected) {
+                        return rejected;
+                    }
+                    if (this._bodyBlob) {
+                        return readBlobAsText(this._bodyBlob);
+                    } else if (this._bodyArrayBuffer) {
+                        return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer));
+                    } else if (this._bodyFormData) {
+                        throw new Error("could not read FormData body as text");
+                    } else {
+                        return Promise.resolve(this._bodyText);
+                    }
+                };
+                if (support.formData) {
+                    this.formData = function () {
+                        return this.text().then(decode);
+                    };
+                }
+                this.json = function () {
+                    return this.text().then(JSON.parse);
+                };
+                return this;
+            }
+            // HTTP methods whose capitalization should be normalized
+            var methods = ["DELETE", "GET", "HEAD", "OPTIONS", "POST", "PUT"];
+            function normalizeMethod(method) {
+                var upcased = method.toUpperCase();
+                return methods.indexOf(upcased) > -1 ? upcased : method;
+            }
+            function Request(input, options) {
+                options = options || {};
+                var body = options.body;
+                if (input instanceof Request) {
+                    if (input.bodyUsed) {
+                        throw new TypeError("Already read");
+                    }
+                    this.url = input.url;
+                    this.credentials = input.credentials;
+                    if (!options.headers) {
+                        this.headers = new Headers(input.headers);
+                    }
+                    this.method = input.method;
+                    this.mode = input.mode;
+                    if (!body && input._bodyInit != null) {
+                        body = input._bodyInit;
+                        input.bodyUsed = true;
+                    }
+                } else {
+                    this.url = String(input);
+                }
+                this.credentials = options.credentials || this.credentials || "omit";
+                if (options.headers || !this.headers) {
+                    this.headers = new Headers(options.headers);
+                }
+                this.method = normalizeMethod(options.method || this.method || "GET");
+                this.mode = options.mode || this.mode || null;
+                this.referrer = null;
+                if ((this.method === "GET" || this.method === "HEAD") && body) {
+                    throw new TypeError("Body not allowed for GET or HEAD requests");
+                }
+                this._initBody(body);
+            }
+            Request.prototype.clone = function () {
+                return new Request(this, { body: this._bodyInit });
+            };
+            function decode(body) {
+                var form = new FormData();
+                body.trim().split("&").forEach(function (bytes) {
+                    if (bytes) {
+                        var split = bytes.split("=");
+                        var name = split.shift().replace(/\+/g, " ");
+                        var value = split.join("=").replace(/\+/g, " ");
+                        form.append(decodeURIComponent(name), decodeURIComponent(value));
+                    }
+                });
+                return form;
+            }
+            function parseHeaders(rawHeaders) {
+                var headers = new Headers({});
+                rawHeaders.split(/\r?\n/).forEach(function (line) {
+                    var parts = line.split(":");
+                    var key = parts.shift().trim();
+                    if (key) {
+                        var value = parts.join(":").trim();
+                        headers.append(key, value);
+                    }
+                });
+                return headers;
+            }
+            Body.call(Request.prototype);
+            var Response = function Response(bodyInit, options) {
+                if (!options) {
+                    options = {};
+                }
+                this.type = "default";
+                this.status = "status" in options ? options.status : 200;
+                this.ok = this.status >= 200 && this.status < 300;
+                this.statusText = "statusText" in options ? options.statusText : "OK";
+                this.headers = new Headers(options.headers);
+                this.url = options.url || "";
+                this._initBody(bodyInit);
+            };
+            Body.call(Response.prototype);
+            Response.prototype.clone = function () {
+                return new Response(this._bodyInit, {
+                    status: this.status,
+                    statusText: this.statusText,
+                    headers: new Headers(this.headers),
+                    url: this.url
+                });
+            };
+            Response.error = function () {
+                var response = new Response(null, { status: 0, statusText: "" });
+                response.type = "error";
+                return response;
+            };
+            var redirectStatuses = [301, 302, 303, 307, 308];
+            Response.redirect = function (url, status) {
+                if (redirectStatuses.indexOf(status) === -1) {
+                    throw new RangeError("Invalid status code");
+                }
+                return new Response(null, {
+                    status: status,
+                    headers: { location: url }
+                });
+            };
+            self.Headers = Headers;
+            self.Request = Request;
+            self.Response = Response;
+            self.fetch = function (input, init) {
+                return new Promise(function (resolve, reject) {
+                    var request = new Request(input, init);
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function () {
+                        var options = {
+                            status: xhr.status,
+                            statusText: xhr.statusText,
+                            headers: parseHeaders(xhr.getAllResponseHeaders() || "")
+                        };
+                        options.url = "responseURL" in xhr ? xhr.responseURL : options.headers.get("X-Request-URL");
+                        var body = "response" in xhr ? xhr.response : xhr.responseText;
+                        resolve(new Response(body, options));
+                    };
+                    xhr.onerror = function () {
+                        reject(new TypeError("Network request failed"));
+                    };
+                    xhr.ontimeout = function () {
+                        reject(new TypeError("Network request failed"));
+                    };
+                    xhr.open(request.method, request.url, true);
+                    if (request.credentials === "include") {
+                        xhr.withCredentials = true;
+                    }
+                    if ("responseType" in xhr && support.blob) {
+                        xhr.responseType = "blob";
+                    }
+                    request.headers.forEach(function (value, name) {
+                        xhr.setRequestHeader(name, value);
+                    });
+                    xhr.send(typeof request._bodyInit === "undefined" ? null : request._bodyInit);
+                });
+            };
+            self.fetch.polyfill = true;
+        })(typeof self !== "undefined" ? self : this);
+        return {
+            fetch: self.fetch,
+            Headers: self.Headers,
+            Request: self.Request,
+            Response: self.Response
+        };
+    }();
+};
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Request =
+// Constructor
+/**
+ * @class Request
+ * @param {object} config
+ * @param {string} config.endpoint
+ * @param {object} [config.options]
+ * @param {FormData} [config.body]
+ */
+function Request(_ref) {
+    var _this = this;
+
+    var endpoint = _ref.endpoint,
+        options = _ref.options,
+        body = _ref.body;
+
+    _classCallCheck(this, Request);
+
+    // Private methods
+    /**
+     * @private
+     * @function Request.prepareFetchOptions
+     * @description Creates blank FormData object if this.body is undefined and
+     * this.options.method is equal to "POST".
+     * @returns {FormData}
+     */
+    this.prepareFetchOptions = function () {
+        if (!_this.body && _this.options.method === "POST") {
+            _this.body = new FormData();
+        }
+        return _this.body;
+    };
+    // Public methods
+    /**
+     * @public
+     * @function Request.send
+     * @param	{object} options
+     * @param {boolean} [options.async] Allows property `async` to be set to indicate the
+     * response should be prepared before returning.
+     * @returns {Promise}
+     */
+    this.send = function () {
+        var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { async: false },
+            async = _ref2.async;
+
+        var _ref3 = window ? window.fetch ? window : fetchPonyfill({}).fetch : {
+            fetch: function fetch() {
+                console.warn("fetch is not supported");
+            }
+        },
+            fetch = _ref3.fetch;
+
+        var preparedOptions = _extends({}, _this.prepareFetchOptions(), _this.options);
+        var initFetch = fetch(_this.endpoint, preparedOptions);
+        return async ? initFetch.then(function (res) {
+            return res.json();
+        }) : initFetch;
+    };
+    this.endpoint = endpoint;
+    this.options = options || Request.defaultOptions;
+    this.body = body;
+};
+// Static properties
+/**
+ * @static
+ * @member {object} Request.defaultOptions Options object to fallback to if
+ * no options property is passed into the constructor config object.
+ */
+
+
+Request.defaultOptions = {
+    method: "GET",
+    headers: { Accept: "application/json" }
+};
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+/**
+ * @module parse
+ */
+/**
+ * Base from https://gist.github.com/geoffdavis92/1da7d0745e3bba036f94
+ * @function params
+ * @description Creates object of key/value pairs from URL parameters.
+ * @param {string} [url] URL to parse; defaults to window.location.search.
+ * @return {object} Object of key/value pairs.
+ */
+var params = function params() {
+    var url = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location.search;
+    return url.split("?")[1].split("&").map(function (q) {
+        return q.split("=");
+    }).reduce(function (acc, _ref, i, arr) {
+        var _ref2 = _slicedToArray(_ref, 2),
+            key = _ref2[0],
+            val = _ref2[1];
+
+        acc[key] = decodeURIComponent(val).replace(/\+/g, " ");
+        return acc;
+    }, {});
+};
+/**
+ * @function parseExternalMarkdownLinks
+ * @description Transforms Markdown links to use target="_blank", rel="noopener noreferrer";
+ * usually used when implementing clientside Markdown, before sending the Markdown to the main
+ * parsing function.
+ * @param {string} string String to parse as Markdown link.
+ * @returns {string} HTML link with URL and innerText, target and rel attributes properly set for
+ * an external link.
+ */
+var parseExternalMarkdownLinks = function parseExternalMarkdownLinks(string) {
+    var pattern = /\[([^\]]+)\]\(([^)]+)\)/g;
+    if (string.search(pattern) > -1) {
+        return string.replace(pattern, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    } else {
+        return string;
+    }
+};
+
+/**
+ * @module scroll
+ */
+/**
+ * @function isElementInViewport
+ * @description Determines if a given element is partially or
+ * fully visible in the viewport.
+ * @param {object} config
+ * @param {Element} config.element HTML Element node to target.
+ * @param {number} [config.threshold] Ratio of the viewport height the element
+ * must fill before being considered visible. E.g. 0.5 means the element
+ * must take up 50% of the screen before returning true. Defaults to 0.25.
+ * Only used for elements taller than the viewport.
+ * @return {boolean} Boolean describing if input is fully/partially
+ * in the viewport, relative to the threshold setting.
+ */
+function isElementInViewport(_ref) {
+    var argElement = _ref.element,
+        argThreshold = _ref.threshold;
+
+    var defaultParams = {
+        threshold: 0.25
+    };
+    var safeArgs = {
+        threshold: argThreshold || defaultParams.threshold
+    };
+    var rect = argElement.getBoundingClientRect();
+    var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    var threshold = safeArgs.threshold;
+
+    if (threshold < 0 || threshold > 1) {
+        throw new RangeError("Threshold argument must be a decimal between 0 and 1");
+    }
+    //If the element is too tall to fit within the viewport
+    if (rect.height >= threshold * viewportHeight) {
+        if (rect.top - viewportHeight <= threshold * viewportHeight * -1 && rect.bottom >= threshold * viewportHeight) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        //If the element is short enough to fit within the viewport
+        if (rect.top >= 0 && rect.bottom - viewportHeight <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+/**
+ * From http://bit.ly/2cP65fD
+ * @todo Classify and describe params.
+ * @function scrollTo
+ * @description Scrolls given element to determined point.
+ * @param  {Element} element  [description]
+ * @param  {number} to       [description]
+ * @param  {number} duration [description]
+ * @return {void}
+ */
+function scrollTo(element, to, duration) {
+    if (duration <= 0) return;
+    var difference = to - element.scrollTop;
+    var perTick = difference / duration * 10;
+    setTimeout(function () {
+        element.scrollTop = element.scrollTop + perTick;
+        if (element.scrollTop === to) return;
+        scrollTo(element, to, duration - 10);
+    }, 10);
+}
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+/**
+ * @module select
+ */
+/**
+ * @function select
+ * @description Selects a DOM node based on a query.
+ * @param {string} query query selector to use to query an node.
+ * @returns {Element} First DOM node that matches the query.
+ */
+var select = function select(query) {
+  return document.querySelector(query);
+};
+/**
+ * @function selectAll
+ * @description Selects a DOM nodelist based on a query.
+ * @param {string} query query selector to use to query a nodelist.
+ * @returns {Element[]} Array of DOM nodes that match the query.
+ */
+var selectAll = function selectAll(query) {
+  return [].concat(_toConsumableArray(document.querySelectorAll(query)));
+};
+/**
+ * @function selectById
+ * @description Selects a DOM node based on an ID string.
+ * @param {string} id ID of DOM node to select.
+ * @returns {Element} DOM node with matched ID.
+ */
+var selectById = function selectById(id) {
+  return document.getElementById(id);
+};
+
+function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
+
+/**
+ * @module typography
+ */
+/**
+ * @function capitalize
+ * @description Capitalizes all words in a string.
+ * @param {string} string Text to capitalize.
+ * @returns {string} Title-cased text.
+ */
+var capitalize = function capitalize(string) {
+  return string.split(" ").map(function (s) {
+    return ucFirst(s);
+  }).join(" ");
+};
+/**
+ * @function slugify
+ * @description Lowercases string, replaces spaces and special characters
+ * with a set delimiter.
+ * @param {string} textToSlug Text to slugify.
+ * @param {string} [delimiter] Delimiter; defaults to "-".
+ * @returns {string} Slugified text.
+ */
+var slugify = function slugify(textToSlug) {
+  var delimiter = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "-";
+  return textToSlug.replace(/(\!|#|\$|%|\*|\.|\/|\\|\(|\)|\+|\||\,|\:|\'|\")/g, "").replace(/(.)(\s|\_|\-)+(.)/g, "$1" + delimiter + "$3").toLowerCase();
+};
+/**
+ * @function trim
+ * @description Trims whitespace on either end of a string.
+ * @param {string} string Text to trim.
+ * @returns {string} Trimmed text.
+ */
+var trim = function trim(string) {
+  return string.replace(/^\s+|\s+$/g, "");
+};
+/**
+ * @function ucFirst
+ * @description Capitalizes first word in a string.
+ * @param {string} string Text to capitalize.
+ * @returns {string} Capitalized text.
+ */
+var ucFirst = function ucFirst(_ref) {
+  var _ref2 = _toArray(_ref),
+      firstLetter = _ref2[0],
+      restLetters = _ref2.slice(1);
+
+  return "" + firstLetter.toUpperCase() + restLetters.join("");
+};
+
+exports.Request = Request;
+exports.capitalize = capitalize;
+exports.isElementInViewport = isElementInViewport;
+exports.parseExternalMarkdownLinks = parseExternalMarkdownLinks;
+exports.parseURLParams = params;
+exports.scrollTo = scrollTo;
+exports.select = select;
+exports.selectAll = selectAll;
+exports.selectById = selectById;
+exports.slugify = slugify;
+exports.trim = trim;
+exports.ucFirst = ucFirst;
