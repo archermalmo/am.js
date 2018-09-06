@@ -8,8 +8,8 @@ type arrayLike = string | alphanumeric[];
 /**
  * @function searchPropPath
  * @description Recursively searchs through a data object; throws an error if the resulting value of a searched path is undefined.
- * @param {alphanumeric[]} [path] Array of keys in the order of which will be used to recursively search an object
- * @param {object} [collection] Data object
+ * @param {alphanumeric[]} path Array of keys in the order of which will be used to recursively search an object
+ * @param {object} collection Data object
  * @param {string} [delimiter] Delimiter by which to split the path; defaults to '.'
  * @return {any} Value at the end of the searched property path;
  */
