@@ -506,17 +506,22 @@ Request.defaultOptions = {
  */
 /**
  * @function searchPropPath
- * @description Recursively searchs through a data object
+ * @description Recursively searchs through a data object; throws an error if the resulting value of a searched path is undefined.
  * @param {alphanumeric[]} [path] Array of keys in the order of which will be used to recursively search an object
  * @param {object} [collection] Data object
+ * @param {string} [delimiter] Delimiter by which to split the path; defaults to '.'
  * @return {any} Value at the end of the searched property path;
  */
 var searchPropPath = function searchPropPath(path, collection) {
-  var pathResult = collection;
-  path.forEach(function (key) {
-    pathResult = pathResult[key];
-  });
-  return pathResult ? pathResult : false;
+    var delimiter = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ".";
+
+    var safePath = typeof path === "string" ? path.split(delimiter) : path;
+    var pathResult = collection;
+    safePath.forEach(function (key) {
+        pathResult = pathResult[key];
+    });
+    if (pathResult) return pathResult;
+    throw new Error("pathResult yields undefined value when searching " + safePath.join(delimiter) + " on collection argument.");
 };
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
